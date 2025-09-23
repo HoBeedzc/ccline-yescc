@@ -2,7 +2,7 @@
   "name": "@hobeeliu/ccline-yescc-darwin-x64",
   "version": "0.0.0",
   "description": "macOS x64 binary for ccline-yescc",
-  "files": ["ccline"],
+  "files": ["ccline-yescc"],
   "os": ["darwin"],
   "cpu": ["x64"],
   "repository": {

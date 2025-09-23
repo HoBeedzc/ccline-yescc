@@ -19,13 +19,13 @@ npm install -g @hobeeliu/ccline-yescc
 
 ## Usage
 
-After installation, ccline is automatically configured for Claude Code at `~/.claude/ccline/ccline`.
+After installation, ccline-yescc is automatically configured for Claude Code at `~/.claude/ccline/ccline-yescc`.
 
 You can also use it directly:
 
 ```bash
-ccline --help
-ccline --version
+ccline-yescc --help
+ccline-yescc --version
 ```
 
 ## For Users in China
