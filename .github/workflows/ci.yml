@@ -48,19 +48,19 @@ jobs:
         include:
           - target: x86_64-unknown-linux-gnu
             os: ubuntu-22.04
-            name: ccline-nightly-linux-x64
+            name: ccline-yescc-nightly-linux-x64
           - target: x86_64-unknown-linux-musl
             os: ubuntu-latest
-            name: ccline-nightly-linux-x64-static
+            name: ccline-yescc-nightly-linux-x64-static
           - target: x86_64-pc-windows-msvc
             os: windows-latest
-            name: ccline-nightly-windows-x64
+            name: ccline-yescc-nightly-windows-x64
           - target: x86_64-apple-darwin
             os: macos-latest
-            name: ccline-nightly-macos-x64
+            name: ccline-yescc-nightly-macos-x64
           - target: aarch64-apple-darwin
             os: macos-latest
-            name: ccline-nightly-macos-arm64
+            name: ccline-yescc-nightly-macos-arm64
 
     steps:
     - name: Checkout
@@ -93,17 +93,17 @@ jobs:
       if: matrix.os != 'windows-latest'
       run: |
         mkdir -p dist
-        cp target/${{ matrix.target }}/release/ccometixline-yescc dist/ccline
+        cp target/${{ matrix.target }}/release/ccline-yescc dist/ccline-yescc
         cd dist
-        tar czf ../${{ matrix.name }}-${{ github.sha }}.tar.gz ccline
+        tar czf ../${{ matrix.name }}-${{ github.sha }}.tar.gz ccline-yescc
 
     - name: Package Windows
       if: matrix.os == 'windows-latest'
       run: |
         mkdir dist
-        copy "target\${{ matrix.target }}\release\ccometixline-yescc.exe" "dist\ccline.exe"
+        copy "target\${{ matrix.target }}\release\ccline-yescc.exe" "dist\ccline-yescc.exe"
         cd dist
-        7z a "..\${{ matrix.name }}-${{ github.sha }}.zip" ccline.exe
+        7z a "..\${{ matrix.name }}-${{ github.sha }}.zip" ccline-yescc.exe
 
     - name: Upload nightly build artifact
       uses: actions/upload-artifact@v4
@@ -198,22 +198,22 @@ jobs:
           ## 📦 Available Downloads
 
           ### Linux
-          - **ccline-nightly-linux-x64**: Standard Linux x64 build (Ubuntu 22.04+)
-          - **ccline-nightly-linux-x64-static**: Static Linux x64 build (Universal compatibility)
+          - **ccline-yescc-nightly-linux-x64**: Standard Linux x64 build (Ubuntu 22.04+)
+          - **ccline-yescc-nightly-linux-x64-static**: Static Linux x64 build (Universal compatibility)
 
           ### macOS
-          - **ccline-nightly-macos-x64**: Intel Mac build
-          - **ccline-nightly-macos-arm64**: Apple Silicon Mac build
+          - **ccline-yescc-nightly-macos-x64**: Intel Mac build
+          - **ccline-yescc-nightly-macos-arm64**: Apple Silicon Mac build
 
           ### Windows
-          - **ccline-nightly-windows-x64**: Windows x64 build
+          - **ccline-yescc-nightly-windows-x64**: Windows x64 build
 
           ## ⚠️ Important Notes
 
           - This is a **development build** from the latest `master` branch
           - Use at your own risk - may contain bugs or incomplete features
           - For stable releases, see the [Releases](https://github.com/${{ github.repository }}/releases) page
-          - Install via NPM: `npm install -g @ding113/ccline` (stable)
+          - Install via NPM: `npm install -g @hobeeliu/ccline-yescc` (stable)
 
           ## 🚀 What's New
 

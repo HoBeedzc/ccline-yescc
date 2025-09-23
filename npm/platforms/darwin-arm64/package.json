@@ -2,7 +2,7 @@
   "name": "@hobeeliu/ccline-yescc-darwin-arm64",
   "version": "0.0.0",
   "description": "macOS ARM64 binary for ccline-yescc",
-  "files": ["ccline"],
+  "files": ["ccline-yescc"],
   "os": ["darwin"],
   "cpu": ["arm64"],
   "repository": {

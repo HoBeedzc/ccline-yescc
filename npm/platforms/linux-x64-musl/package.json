@@ -2,7 +2,7 @@
   "name": "@hobeeliu/ccline-yescc-linux-x64-musl",
   "version": "0.0.0",
   "description": "Linux x64 static binary for ccline-yescc (musl libc)",
-  "files": ["ccline"],
+  "files": ["ccline-yescc"],
   "os": ["linux"],
   "cpu": ["x64"],
   "repository": {
