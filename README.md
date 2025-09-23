@@ -66,9 +66,9 @@ npm install -g @hobeeliu/ccline-yescc --registry https://registry.npmmirror.com
 ```
 
 After installation:
-- ✅ Global command `ccline` is available everywhere
+- ✅ Global command `ccline-yescc` is available everywhere
 - ⚙️ Follow the configuration steps below to integrate with Claude Code
-- 🎨 Run `ccline -c` to open configuration panel for theme selection
+- 🎨 Run `ccline-yescc -c` to open configuration panel for theme selection
 
 ### Claude Code Configuration
 
@@ -79,7 +79,7 @@ Add to your Claude Code `settings.json`:
 {
   "statusLine": {
     "type": "command", 
-    "command": "~/.claude/ccline/ccline",
+    "command": "~/.claude/ccline/ccline-yescc",
     "padding": 0
   }
 }
@@ -90,7 +90,7 @@ Add to your Claude Code `settings.json`:
 {
   "statusLine": {
     "type": "command", 
-    "command": "%USERPROFILE%\\.claude\\ccline\\ccline.exe",
+    "command": "%USERPROFILE%\\.claude\\ccline\\ccline-yescc.exe",
     "padding": 0
   }
 }
@@ -101,7 +101,7 @@ Add to your Claude Code `settings.json`:
 {
   "statusLine": {
     "type": "command", 
-    "command": "ccline",
+    "command": "ccline-yescc",
     "padding": 0
   }
 }
@@ -124,20 +124,20 @@ Alternatively, download from [Releases](https://github.com/HoBeedzc/ccline-yescc
 #### Option 1: Dynamic Binary (Recommended)
 ```bash
 mkdir -p ~/.claude/ccline
-wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-linux-x64.tar.gz
-tar -xzf ccline-linux-x64.tar.gz
-cp ccline ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline
+wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-linux-x64.tar.gz
+tar -xzf ccline-yescc-linux-x64.tar.gz
+cp ccline-yescc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-yescc
 ```
 *Requires: Ubuntu 22.04+, CentOS 9+, Debian 11+, RHEL 9+ (glibc 2.35+)*
 
 #### Option 2: Static Binary (Universal Compatibility)
 ```bash
 mkdir -p ~/.claude/ccline
-wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-linux-x64-static.tar.gz
-tar -xzf ccline-linux-x64-static.tar.gz
-cp ccline ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline
+wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-linux-x64-static.tar.gz
+tar -xzf ccline-yescc-linux-x64-static.tar.gz
+cp ccline-yescc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-yescc
 ```
 *Works on any Linux distribution (static, no dependencies)*
 
@@ -145,30 +145,30 @@ chmod +x ~/.claude/ccline/ccline
 
 ```bash  
 mkdir -p ~/.claude/ccline
-wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-macos-x64.tar.gz
-tar -xzf ccline-macos-x64.tar.gz
-cp ccline ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline
+wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-macos-x64.tar.gz
+tar -xzf ccline-yescc-macos-x64.tar.gz
+cp ccline-yescc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-yescc
 ```
 
 #### macOS (Apple Silicon)
 
 ```bash
 mkdir -p ~/.claude/ccline  
-wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-macos-arm64.tar.gz
-tar -xzf ccline-macos-arm64.tar.gz
-cp ccline ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline
+wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-macos-arm64.tar.gz
+tar -xzf ccline-yescc-macos-arm64.tar.gz
+cp ccline-yescc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-yescc
 ```
 
 #### Windows
 
 ```powershell
 # Create directory and download
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline"
-Invoke-WebRequest -Uri "https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-windows-x64.zip" -OutFile "ccline-windows-x64.zip"
-Expand-Archive -Path "ccline-windows-x64.zip" -DestinationPath "."
-Move-Item "ccline.exe" "$env:USERPROFILE\.claude\ccline\"
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline-yescc"
+Invoke-WebRequest -Uri "https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-windows-x64.zip" -OutFile "ccline-yescc-windows-x64.zip"
+Expand-Archive -Path "ccline-yescc-windows-x64.zip" -DestinationPath "."
+Move-Item "ccline-yescc.exe" "$env:USERPROFILE\.claude\ccline-yescc\"
 ```
 
 </details>
@@ -182,12 +182,12 @@ cargo build --release
 
 # Linux/macOS
 mkdir -p ~/.claude/ccline
-cp target/release/ccometixline ~/.claude/ccline/ccline
-chmod +x ~/.claude/ccline/ccline
+cp target/release/ccometixline ~/.claude/ccline-yescc/ccline-yescc
+chmod +x ~/.claude/ccline/ccline-yescc
 
 # Windows (PowerShell)
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline"
-copy target\release\ccometixline.exe "$env:USERPROFILE\.claude\ccline\ccline.exe"
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline-yescc"
+copy target\release\ccometixline.exe "$env:USERPROFILE\.claude\ccline-yescc\ccline-yescc.exe"
 ```
 
 ## Usage
@@ -196,40 +196,40 @@ copy target\release\ccometixline.exe "$env:USERPROFILE\.claude\ccline\ccline.exe
 
 ```bash
 # Initialize configuration file
-ccline --init
+ccline-yescc --init
 
 # Check configuration validity  
-ccline --check
+ccline-yescc --check
 
 # Print current configuration
-ccline --print
+ccline-yescc --print
 
 # Enter TUI configuration mode
-ccline --config
+ccline-yescc --config
 ```
 
 ### Theme Override
 
 ```bash
 # Temporarily use specific theme (overrides config file)
-ccline --theme cometix
-ccline --theme minimal
-ccline --theme gruvbox
-ccline --theme nord
-ccline --theme powerline-dark
+ccline-yescc --theme cometix
+ccline-yescc --theme minimal
+ccline-yescc --theme gruvbox
+ccline-yescc --theme nord
+ccline-yescc --theme powerline-dark
 
-# Or use custom theme files from ~/.claude/ccline/themes/
-ccline --theme my-custom-theme
+# Or use custom theme files from ~/.claude/ccline-yescc/themes/
+ccline-yescc --theme my-custom-theme
 ```
 
 ### Claude Code Enhancement
 
 ```bash
 # Disable context warnings and enable verbose mode
-ccline --patch /path/to/claude-code/cli.js
+ccline-yescc --patch /path/to/claude-code/cli.js
 
 # Example for common installation
-ccline --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/node_modules/@anthropic-ai/claude-code/cli.js
+ccline-yescc --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/node_modules/@anthropic-ai/claude-code/cli.js
 ```
 
 ## Default Segments
@@ -269,10 +269,10 @@ Supports multiple API key sources:
 
 CCometixLine supports full configuration via TOML files and interactive TUI:
 
-- **Configuration file**: `~/.claude/ccline/config.toml`
-- **Interactive TUI**: `ccline --config` for real-time editing with preview
-- **Theme files**: `~/.claude/ccline/themes/*.toml` for custom themes
-- **Automatic initialization**: `ccline --init` creates default configuration
+- **Configuration file**: `~/.claude/ccline-yescc/config.toml`
+- **Interactive TUI**: `ccline-yescc --config` for real-time editing with preview
+- **Theme files**: `~/.claude/ccline-yescc/themes/*.toml` for custom themes
+- **Automatic initialization**: `ccline-yescc --init` creates default configuration
 
 ### Available Segments
 

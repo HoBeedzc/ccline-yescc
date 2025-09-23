@@ -2,7 +2,7 @@
   "name": "@hobeeliu/ccline-yescc-win32-x64",
   "version": "0.0.0",
   "description": "Windows x64 binary for ccline-yescc",
-  "files": ["ccline.exe"],
+  "files": ["ccline-yescc.exe"],
   "os": ["win32"],
   "cpu": ["x64"],
   "repository": {
