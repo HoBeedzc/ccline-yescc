@@ -4,9 +4,15 @@
 
 A high-performance Claude Code statusline tool written in Rust with Git integration, usage tracking, interactive TUI configuration, API quota monitoring and Claude Code enhancement utilities.
 
+> **Maintained by [HoBeedzc](https://github.com/HoBeedzc)** - This is a specially adapted version of CCometixLine for YesCode service. The original CCometixLine was created by [Haleclipse](https://github.com/Haleclipse/CCometixLine) under MIT License. This project is also released under MIT License.
+>
+> This project also incorporates code from another MIT-licensed project, [ccline-packycc](https://github.com/ding113/ccline-packycc), with attribution retained.
+>
+> YesCode is a third-party Claude Code proxy service. This project is a voluntary third-party adaptation and is not affiliated with Anthropic or YesCode. YesCode websites: [yescode](https://co.yes.vg/). This project implements automatic adaptation for both endpoints.
+
 ![Language:Rust](https://img.shields.io/static/v1?label=Language&message=Rust&color=orange&style=flat-square)
 ![License:MIT](https://img.shields.io/static/v1?label=License&message=MIT&color=blue&style=flat-square)
-[![CI](https://github.com/ding113/CCometixLine/actions/workflows/ci.yml/badge.svg)](https://github.com/ding113/CCometixLine/actions/workflows/ci.yml)
+[![CI](https://github.com/HoBeedzc/ccline-yescc/actions/workflows/ci.yml/badge.svg)](https://github.com/HoBeedzc/ccline-yescc/actions/workflows/ci.yml)
 
 ## Screenshots
 
@@ -45,18 +51,18 @@ Install via npm (works on all platforms):
 
 ```bash
 # Install globally
-npm install -g @cometix/ccline
+npm install -g @hobeeliu/ccline-yescc
 
 # Or using yarn
-yarn global add @cometix/ccline
+yarn global add @hobeeliu/ccline-yescc
 
 # Or using pnpm
-pnpm add -g @cometix/ccline
+pnpm add -g @hobeeliu/ccline-yescc
 ```
 
 Use npm mirror for faster download:
 ```bash
-npm install -g @cometix/ccline --registry https://registry.npmmirror.com
+npm install -g @hobeeliu/ccline-yescc --registry https://registry.npmmirror.com
 ```
 
 After installation:
@@ -105,20 +111,20 @@ Add to your Claude Code `settings.json`:
 ### Update
 
 ```bash
-npm update -g @cometix/ccline
+npm update -g @hobeeliu/ccline-yescc
 ```
 
 <details>
 <summary>Manual Installation (Click to expand)</summary>
 
-Alternatively, download from [Releases](https://github.com/Haleclipse/CCometixLine/releases):
+Alternatively, download from [Releases](https://github.com/HoBeedzc/ccline-yescc/releases):
 
 #### Linux
 
 #### Option 1: Dynamic Binary (Recommended)
 ```bash
 mkdir -p ~/.claude/ccline
-wget https://github.com/Haleclipse/CCometixLine/releases/latest/download/ccline-linux-x64.tar.gz
+wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-linux-x64.tar.gz
 tar -xzf ccline-linux-x64.tar.gz
 cp ccline ~/.claude/ccline/
 chmod +x ~/.claude/ccline/ccline
@@ -128,7 +134,7 @@ chmod +x ~/.claude/ccline/ccline
 #### Option 2: Static Binary (Universal Compatibility)
 ```bash
 mkdir -p ~/.claude/ccline
-wget https://github.com/Haleclipse/CCometixLine/releases/latest/download/ccline-linux-x64-static.tar.gz
+wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-linux-x64-static.tar.gz
 tar -xzf ccline-linux-x64-static.tar.gz
 cp ccline ~/.claude/ccline/
 chmod +x ~/.claude/ccline/ccline
@@ -139,7 +145,7 @@ chmod +x ~/.claude/ccline/ccline
 
 ```bash  
 mkdir -p ~/.claude/ccline
-wget https://github.com/Haleclipse/CCometixLine/releases/latest/download/ccline-macos-x64.tar.gz
+wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-macos-x64.tar.gz
 tar -xzf ccline-macos-x64.tar.gz
 cp ccline ~/.claude/ccline/
 chmod +x ~/.claude/ccline/ccline
@@ -149,7 +155,7 @@ chmod +x ~/.claude/ccline/ccline
 
 ```bash
 mkdir -p ~/.claude/ccline  
-wget https://github.com/Haleclipse/CCometixLine/releases/latest/download/ccline-macos-arm64.tar.gz
+wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-macos-arm64.tar.gz
 tar -xzf ccline-macos-arm64.tar.gz
 cp ccline ~/.claude/ccline/
 chmod +x ~/.claude/ccline/ccline
@@ -160,7 +166,7 @@ chmod +x ~/.claude/ccline/ccline
 ```powershell
 # Create directory and download
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline"
-Invoke-WebRequest -Uri "https://github.com/Haleclipse/CCometixLine/releases/latest/download/ccline-windows-x64.zip" -OutFile "ccline-windows-x64.zip"
+Invoke-WebRequest -Uri "https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-windows-x64.zip" -OutFile "ccline-windows-x64.zip"
 Expand-Archive -Path "ccline-windows-x64.zip" -DestinationPath "."
 Move-Item "ccline.exe" "$env:USERPROFILE\.claude\ccline\"
 ```
@@ -170,8 +176,8 @@ Move-Item "ccline.exe" "$env:USERPROFILE\.claude\ccline\"
 ### Build from Source
 
 ```bash
-git clone https://github.com/Haleclipse/CCometixLine.git
-cd CCometixLine
+git clone https://github.com/HoBeedzc/ccline-yescc.git
+cd ccline-yescc
 cargo build --release
 
 # Linux/macOS
@@ -315,8 +321,8 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 ## Related Projects
 
 - [tweakcc](https://github.com/Piebald-AI/tweakcc) - Command-line tool to customize your Claude Code themes, thinking verbs, and more.
-- [CCometixLine](https://github.com/Haleclipse/CCometixLine) - A high-performance Claude Code status line tool written in Rust.
-- [ccline-packycc](https://github.com/ding113/ccline-packycc) - A high-performance Claude Code status line tool written in Rust.
+- [CCometixLine](https://github.com/Haleclipse/CCometixLine) - Original high-performance Claude Code status line tool written in Rust (upstream project).
+- [ccline-packycc](https://github.com/ding113/ccline-packycc) - Another high-performance Claude Code status line tool written in Rust.
 
 ## License
 
