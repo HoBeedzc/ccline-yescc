@@ -1,14 +1,14 @@
 {
-  "name": "@cometix/ccline-linux-x64",
+  "name": "@hobeeliu/ccline-yescc-linux-x64",
   "version": "0.0.0",
-  "description": "Linux x64 binary for CCometixLine",
+  "description": "Linux x64 binary for ccline-yescc",
   "files": ["ccline"],
   "os": ["linux"],
   "cpu": ["x64"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Haleclipse/CCometixLine"
+    "url": "https://github.com/HoBeedzc/ccline-yescc"
   },
-  "author": "Haleclipse",
+  "author": "Hobee Liu",
   "license": "MIT"
 }
