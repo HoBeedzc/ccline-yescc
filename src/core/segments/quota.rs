@@ -16,6 +16,7 @@ struct YesCodeApiResponse {
 
 #[derive(Debug, Deserialize)]
 struct DailyUsage {
+    #[allow(dead_code)]
     date: String,
     total_cost: f64,
 }
@@ -28,6 +29,7 @@ struct EndpointConfig {
 }
 
 // 端点缓存
+#[allow(dead_code)]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 struct EndpointCache {
     api_key_hash: u64,
@@ -51,6 +53,7 @@ impl SmartEndpointDetector {
         Self { endpoints }
     }
 
+    #[allow(dead_code)]
     fn get_cache_file_path() -> PathBuf {
         if let Some(home) = dirs::home_dir() {
             home.join(".claude")
@@ -61,6 +64,7 @@ impl SmartEndpointDetector {
         }
     }
 
+    #[allow(dead_code)]
     fn hash_api_key(api_key: &str) -> u64 {
         let mut hasher = std::collections::hash_map::DefaultHasher::new();
         api_key.hash(&mut hasher);
