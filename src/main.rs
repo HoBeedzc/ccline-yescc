@@ -104,19 +104,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         // No input data available, show main menu
         #[cfg(feature = "tui")]
         {
-            use ccometixline::ui::{MainMenu, MenuResult};
+            use ccometixline_yescc::ui::{MainMenu, MenuResult};
 
             if let Some(result) = MainMenu::run()? {
                 match result {
                     MenuResult::LaunchConfigurator => {
-                        ccometixline::ui::run_configurator()?;
+                        ccometixline_yescc::ui::run_configurator()?;
                     }
                     MenuResult::InitConfig => {
-                        ccometixline::config::Config::init()?;
+                        ccometixline_yescc::config::Config::init()?;
                         println!("Configuration initialized successfully!");
                     }
                     MenuResult::CheckConfig => {
-                        let config = ccometixline::config::Config::load()?;
+                        let config = ccometixline_yescc::config::Config::load()?;
                         config.check()?;
                         println!("Configuration is valid!");
                     }
