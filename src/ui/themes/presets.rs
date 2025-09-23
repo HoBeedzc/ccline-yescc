@@ -137,6 +137,7 @@ impl ThemePresets {
                 theme_cometix::cost_segment(),
                 theme_cometix::session_segment(),
                 theme_cometix::output_style_segment(),
+                theme_cometix::quota_segment(),
             ],
             theme: "cometix".to_string(),
         }
@@ -157,6 +158,7 @@ impl ThemePresets {
                 theme_default::cost_segment(),
                 theme_default::session_segment(),
                 theme_default::output_style_segment(),
+                theme_default::quota_segment(),
             ],
             theme: "default".to_string(),
         }
@@ -177,6 +179,7 @@ impl ThemePresets {
                 theme_minimal::cost_segment(),
                 theme_minimal::session_segment(),
                 theme_minimal::output_style_segment(),
+                theme_minimal::quota_segment(),
             ],
             theme: "minimal".to_string(),
         }
@@ -197,6 +200,7 @@ impl ThemePresets {
                 theme_gruvbox::cost_segment(),
                 theme_gruvbox::session_segment(),
                 theme_gruvbox::output_style_segment(),
+                theme_gruvbox::quota_segment(),
             ],
             theme: "gruvbox".to_string(),
         }
@@ -217,6 +221,7 @@ impl ThemePresets {
                 theme_nord::cost_segment(),
                 theme_nord::session_segment(),
                 theme_nord::output_style_segment(),
+                theme_nord::quota_segment(),
             ],
             theme: "nord".to_string(),
         }
@@ -237,6 +242,7 @@ impl ThemePresets {
                 theme_powerline_dark::cost_segment(),
                 theme_powerline_dark::session_segment(),
                 theme_powerline_dark::output_style_segment(),
+                theme_powerline_dark::quota_segment(),
             ],
             theme: "powerline-dark".to_string(),
         }
@@ -257,6 +263,7 @@ impl ThemePresets {
                 theme_powerline_light::cost_segment(),
                 theme_powerline_light::session_segment(),
                 theme_powerline_light::output_style_segment(),
+                theme_powerline_light::quota_segment(),
             ],
             theme: "powerline-light".to_string(),
         }
@@ -277,6 +284,7 @@ impl ThemePresets {
                 theme_powerline_rose_pine::cost_segment(),
                 theme_powerline_rose_pine::session_segment(),
                 theme_powerline_rose_pine::output_style_segment(),
+                theme_powerline_rose_pine::quota_segment(),
             ],
             theme: "powerline-rose-pine".to_string(),
         }
@@ -297,8 +305,102 @@ impl ThemePresets {
                 theme_powerline_tokyo_night::cost_segment(),
                 theme_powerline_tokyo_night::session_segment(),
                 theme_powerline_tokyo_night::output_style_segment(),
+                theme_powerline_tokyo_night::quota_segment(),
             ],
             theme: "powerline-tokyo-night".to_string(),
+        }
+    }
+
+    /// Create default theme configuration file with minimal template
+    pub fn create_default_theme_file(theme_name: &str) -> Result<(), Box<dyn std::error::Error>> {
+        let themes_dir = Self::get_themes_path();
+        let theme_path = themes_dir.join(format!("{}.toml", theme_name));
+
+        // Create themes directory if it doesn't exist
+        std::fs::create_dir_all(&themes_dir)?;
+
+        // Create a minimal template config
+        let template_config = Self::get_default();
+        let mut theme_config = template_config;
+        theme_config.theme = theme_name.to_string();
+
+        let toml_content = toml::to_string_pretty(&theme_config)?;
+
+        // Add comments and examples to the template
+        let template_content = format!(
+            "# CCometixLine Theme Configuration: {}\n\
+             # This file defines a custom theme for CCometixLine\n\
+             # File location: ~/.claude/ccline/themes/{}.toml\n\
+             # You can modify colors, icons, and styles below\n\
+             \n\
+             {}\n",
+            theme_name,
+            theme_name,
+            toml_content.trim()
+        );
+
+        std::fs::write(&theme_path, template_content)?;
+        Ok(())
+    }
+
+    /// Check if a theme exists (built-in or custom)
+    pub fn theme_exists(theme_name: &str) -> bool {
+        // Check built-in themes
+        let built_in_themes = vec![
+            "cometix", "default", "minimal", "gruvbox", "nord",
+            "powerline-dark", "powerline-light", "powerline-rose-pine", "powerline-tokyo-night"
+        ];
+
+        if built_in_themes.contains(&theme_name) {
+            return true;
+        }
+
+        // Check custom themes
+        let themes_dir = Self::get_themes_path();
+        let theme_path = themes_dir.join(format!("{}.toml", theme_name));
+        theme_path.exists()
+    }
+
+    /// Delete a custom theme file
+    pub fn delete_theme(theme_name: &str) -> Result<(), Box<dyn std::error::Error>> {
+        // Don't allow deleting built-in themes
+        let built_in_themes = vec![
+            "cometix", "default", "minimal", "gruvbox", "nord",
+            "powerline-dark", "powerline-light", "powerline-rose-pine", "powerline-tokyo-night"
+        ];
+
+        if built_in_themes.contains(&theme_name) {
+            return Err(format!("Cannot delete built-in theme: {}", theme_name).into());
+        }
+
+        let themes_dir = Self::get_themes_path();
+        let theme_path = themes_dir.join(format!("{}.toml", theme_name));
+
+        if theme_path.exists() {
+            std::fs::remove_file(theme_path)?;
+        }
+
+        Ok(())
+    }
+
+    /// Copy an existing theme to create a new one
+    pub fn copy_theme(source_theme: &str, new_theme: &str) -> Result<(), Box<dyn std::error::Error>> {
+        let source_config = Self::get_theme(source_theme);
+        Self::save_theme(new_theme, &source_config)?;
+        Ok(())
+    }
+
+    /// Get theme type (built-in or custom)
+    pub fn get_theme_type(theme_name: &str) -> &'static str {
+        let built_in_themes = vec![
+            "cometix", "default", "minimal", "gruvbox", "nord",
+            "powerline-dark", "powerline-light", "powerline-rose-pine", "powerline-tokyo-night"
+        ];
+
+        if built_in_themes.contains(&theme_name) {
+            "built-in"
+        } else {
+            "custom"
         }
     }
 }
