@@ -1,6 +1,6 @@
-use ccometixline::cli::Cli;
-use ccometixline::config::{Config, InputData};
-use ccometixline::core::{collect_all_segments, StatusLineGenerator};
+use ccometixline_yescc::cli::Cli;
+use ccometixline_yescc::config::{Config, InputData};
+use ccometixline_yescc::core::{collect_all_segments, StatusLineGenerator};
 use std::io::{self, IsTerminal};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -17,7 +17,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         // Apply theme override if provided
         if let Some(theme) = cli.theme {
-            config = ccometixline::ui::themes::ThemePresets::get_theme(&theme);
+            config = ccometixline_yescc::ui::themes::ThemePresets::get_theme(&theme);
         }
 
         config.print()?;
@@ -34,7 +34,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     if cli.config {
         #[cfg(feature = "tui")]
         {
-            ccometixline::ui::run_configurator()?;
+            ccometixline_yescc::ui::run_configurator()?;
         }
         #[cfg(not(feature = "tui"))]
         {
@@ -58,7 +58,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Handle Claude Code patcher
     if let Some(claude_path) = cli.patch {
-        use ccometixline::utils::ClaudeCodePatcher;
+        use ccometixline_yescc::utils::ClaudeCodePatcher;
 
         println!("🔧 Claude Code Context Warning Disabler");
         println!("Target file: {}", claude_path);
@@ -101,7 +101,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Apply theme override if provided
     if let Some(theme) = cli.theme {
-        config = ccometixline::ui::themes::ThemePresets::get_theme(&theme);
+        config = ccometixline_yescc::ui::themes::ThemePresets::get_theme(&theme);
     }
 
     // Check if stdin has data

@@ -1,25 +1,27 @@
-# CCometixLine
+# CCometixLine-YesCC
 
 [English](README.md) | [中文](README.zh.md)
 
-基于 Rust 的高性能 Claude Code 状态栏工具，集成 Git 信息、使用量跟踪、交互式 TUI 配置和 Claude Code 补丁工具。
+基于 Rust 的高性能 Claude Code 状态栏工具，集成 Git 信息、使用量跟踪、交互式 TUI 配置、API 配额监控和 Claude Code 增强工具。
 
 ![Language:Rust](https://img.shields.io/static/v1?label=Language&message=Rust&color=orange&style=flat-square)
 ![License:MIT](https://img.shields.io/static/v1?label=License&message=MIT&color=blue&style=flat-square)
+[![CI](https://github.com/ding113/CCometixLine/actions/workflows/ci.yml/badge.svg)](https://github.com/ding113/CCometixLine/actions/workflows/ci.yml)
 
 ## 截图
 
 ![CCometixLine](assets/img1.png)
 
-状态栏显示：模型 | 目录 | Git 分支状态 | 上下文窗口信息
+状态栏显示：模型 | 目录 | Git 分支状态 | 上下文窗口 | API 配额
 
 ## 特性
 
 ### 核心功能
 - **Git 集成** 显示分支、状态和跟踪信息
 - **模型显示** 简化的 Claude 模型名称
-- **使用量跟踪** 基于转录文件分析  
+- **使用量跟踪** 基于转录文件分析
 - **目录显示** 显示当前工作空间
+- **API 配额显示** 显示当前 API 配额
 - **简洁设计** 使用 Nerd Font 图标
 
 ### 交互式 TUI 功能
@@ -171,7 +173,15 @@ Move-Item "ccline.exe" "$env:USERPROFILE\.claude\ccline\"
 git clone https://github.com/Haleclipse/CCometixLine.git
 cd CCometixLine
 cargo build --release
+
+# Linux/macOS
+mkdir -p ~/.claude/ccline
 cp target/release/ccometixline ~/.claude/ccline/ccline
+chmod +x ~/.claude/ccline/ccline
+
+# Windows (PowerShell)
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline"
+copy target\release\ccometixline.exe "$env:USERPROFILE\.claude\ccline\ccline.exe"
 ```
 
 ## 使用
@@ -218,7 +228,7 @@ ccline --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/node_mo
 
 ## 默认段落
 
-显示：`目录 | Git 分支状态 | 模型 | 上下文窗口`
+显示：`目录 | Git 分支状态 | 模型 | 上下文窗口 | API 配额`
 
 ### Git 状态指示器
 
@@ -235,6 +245,19 @@ ccline --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/node_mo
 ### 上下文窗口显示
 
 基于转录文件分析的令牌使用百分比，包含上下文限制跟踪。
+
+### API 配额显示
+智能监控 API 使用情况：
+
+- **每日花费**: 精确的每日使用金额 (例如 `$88.48`)
+- **自动检测**: 自动检测正确的 API 端点
+- **零配置**: 只需提供 API 密钥，其他都是自动的
+
+支持多种 API 密钥来源：
+
+- 环境变量: `YESCODE_API_KEY`, `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`
+- Claude Code settings.json
+- 本地 API 密钥文件: `~/.claude/api_key`
 
 ## 配置
 
@@ -290,10 +313,16 @@ cargo build --release
 
 欢迎贡献！请随时提交 issue 或 pull request。
 
+## 相关项目
+
+- [tweakcc](https://github.com/Piebald-AI/tweakcc) - 自定义 Claude Code 主题、思考动词等的命令行工具。
+- [CCometixLine](https://github.com/Haleclipse/CCometixLine) - 基于 Rust 的高性能 Claude Code 状态栏工具。
+- [ccline-packycc](https://github.com/ding113/ccline-packycc) - 基于 Rust 的高性能 Claude Code 状态栏工具。
+
 ## 许可证
 
 本项目采用 [MIT 许可证](LICENSE)。
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Haleclipse/CCometixLine&type=Date)](https://star-history.com/#Haleclipse/CCometixLine&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=HoBeedzc/ccline-yescc&type=Date)](https://star-history.com/#HoBeedzc/ccline-yescc&Date)
