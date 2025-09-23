@@ -1,17 +1,18 @@
-# CCometixLine
+# CCometixLine-YesCC
 
 [English](README.md) | [中文](README.zh.md)
 
-A high-performance Claude Code statusline tool written in Rust with Git integration, usage tracking, interactive TUI configuration, and Claude Code enhancement utilities.
+A high-performance Claude Code statusline tool written in Rust with Git integration, usage tracking, interactive TUI configuration, API quota monitoring and Claude Code enhancement utilities.
 
 ![Language:Rust](https://img.shields.io/static/v1?label=Language&message=Rust&color=orange&style=flat-square)
 ![License:MIT](https://img.shields.io/static/v1?label=License&message=MIT&color=blue&style=flat-square)
+[![CI](https://github.com/ding113/CCometixLine/actions/workflows/ci.yml/badge.svg)](https://github.com/ding113/CCometixLine/actions/workflows/ci.yml)
 
 ## Screenshots
 
 ![CCometixLine](assets/img1.png)
 
-The statusline shows: Model | Directory | Git Branch Status | Context Window Information
+The statusline shows: Model | Directory | Git Branch Status | Context Window | API Quota
 
 ## Features
 
@@ -20,6 +21,7 @@ The statusline shows: Model | Directory | Git Branch Status | Context Window Inf
 - **Model display** with simplified Claude model names
 - **Usage tracking** based on transcript analysis
 - **Directory display** showing current workspace
+- **API Quota display** showing current API quota
 - **Minimal design** using Nerd Font icons
 
 ### Interactive TUI Features
@@ -226,7 +228,7 @@ ccline --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/node_mo
 
 ## Default Segments
 
-Displays: `Directory | Git Branch Status | Model | Context Window`
+Displays: `Directory | Git Branch Status | Model | Context Window | API Quota`
 
 ### Git Status Indicators
 
@@ -243,6 +245,19 @@ Shows simplified Claude model names:
 ### Context Window Display
 
 Token usage percentage based on transcript analysis with context limit tracking.
+
+### API Quota Display
+Smart monitoring of API usage:
+
+- **Daily spent**: Precise daily usage amount (e.g., `$88.48`)
+- **Auto-detection**: Automatically detects the correct API endpoint
+- **Zero configuration**: Just provide your API key, everything else is automatic
+
+Supports multiple API key sources:
+
+- Environment variables: `YESCODE_API_KEY`, `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`
+- Claude Code settings.json
+- Local API key file: `~/.claude/api_key`
 
 ## Configuration
 
@@ -300,6 +315,8 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 ## Related Projects
 
 - [tweakcc](https://github.com/Piebald-AI/tweakcc) - Command-line tool to customize your Claude Code themes, thinking verbs, and more.
+- [CCometixLine](https://github.com/Haleclipse/CCometixLine) - A high-performance Claude Code status line tool written in Rust.
+- [ccline-packycc](https://github.com/ding113/ccline-packycc) - A high-performance Claude Code status line tool written in Rust.
 
 ## License
 
@@ -307,4 +324,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Haleclipse/CCometixLine&type=Date)](https://star-history.com/#Haleclipse/CCometixLine&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=HoBeedzc/ccline-yescc&type=Date)](https://star-history.com/#HoBeedzc/ccline-yescc&Date)
