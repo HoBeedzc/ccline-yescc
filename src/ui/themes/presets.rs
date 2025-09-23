@@ -337,7 +337,7 @@ impl ThemePresets {
     /// Check if a theme exists (built-in or custom)
     pub fn theme_exists(theme_name: &str) -> bool {
         // Check built-in themes
-        let built_in_themes = vec![
+        let built_in_themes = [
             "cometix",
             "default",
             "minimal",
@@ -362,7 +362,7 @@ impl ThemePresets {
     /// Delete a custom theme file
     pub fn delete_theme(theme_name: &str) -> Result<(), Box<dyn std::error::Error>> {
         // Don't allow deleting built-in themes
-        let built_in_themes = vec![
+        let built_in_themes = [
             "cometix",
             "default",
             "minimal",
@@ -400,7 +400,7 @@ impl ThemePresets {
 
     /// Get theme type (built-in or custom)
     pub fn get_theme_type(theme_name: &str) -> &'static str {
-        let built_in_themes = vec![
+        let built_in_themes = [
             "cometix",
             "default",
             "minimal",
