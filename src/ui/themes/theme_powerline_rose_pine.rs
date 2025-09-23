@@ -246,3 +246,33 @@ pub fn usage_segment() -> SegmentConfig {
         },
     }
 }
+
+pub fn quota_segment() -> SegmentConfig {
+    SegmentConfig {
+        id: SegmentId::Quota,
+        enabled: true,
+        icon: IconConfig {
+            plain: "💰".to_string(),
+            nerd_font: "\u{f155}".to_string(),
+        },
+        colors: ColorConfig {
+            icon: Some(AnsiColor::Rgb {
+                r: 235,
+                g: 188,
+                b: 186,
+            }),
+            text: Some(AnsiColor::Rgb {
+                r: 235,
+                g: 188,
+                b: 186,
+            }),
+            background: Some(AnsiColor::Rgb {
+                r: 49,
+                g: 46,
+                b: 65,
+            }),
+        },
+        styles: TextStyleConfig::default(),
+        options: HashMap::new(),
+    }
+}
