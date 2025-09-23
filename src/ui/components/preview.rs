@@ -178,6 +178,15 @@ impl PreviewComponent {
                         map
                     },
                 },
+                SegmentId::Quota => SegmentData {
+                    primary: "$88.48".to_string(),
+                    metadata: {
+                        let mut map = HashMap::new();
+                        map.insert("raw_spent".to_string(), "88.4846".to_string());
+                        map.insert("endpoint_used".to_string(), "https://co.yes.vg/api/v1/user/usage/daily".to_string());
+                        map
+                    },
+                },
             };
 
             segments_data.push((segment_config.clone(), mock_data));
