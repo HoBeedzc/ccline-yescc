@@ -43,21 +43,19 @@ struct SmartEndpointDetector {
 
 impl SmartEndpointDetector {
     fn new() -> Self {
-        let endpoints = vec![
-            EndpointConfig {
-                url: "https://co.yes.vg/api/v1/user/usage/daily".to_string(),
-                name: "main".to_string(),
-            },
-        ];
+        let endpoints = vec![EndpointConfig {
+            url: "https://co.yes.vg/api/v1/user/usage/daily".to_string(),
+            name: "main".to_string(),
+        }];
 
-        Self {
-            endpoints,
-        }
+        Self { endpoints }
     }
 
     fn get_cache_file_path() -> PathBuf {
         if let Some(home) = dirs::home_dir() {
-            home.join(".claude").join("ccline").join("endpoint_cache.json")
+            home.join(".claude")
+                .join("ccline")
+                .join("endpoint_cache.json")
         } else {
             PathBuf::from("endpoint_cache.json")
         }
@@ -71,7 +69,7 @@ impl SmartEndpointDetector {
 
     fn try_endpoint(&self, endpoint: &EndpointConfig, api_key: &str) -> Option<YesCodeApiResponse> {
         let debug = env::var("YESCODE_DEBUG").is_ok();
-        
+
         if debug {
             eprintln!("[DEBUG] Trying endpoint: {}", endpoint.url);
         }
@@ -89,13 +87,21 @@ impl SmartEndpointDetector {
                 if response.status() == 200 {
                     let elapsed = start_time.elapsed().unwrap_or(Duration::from_secs(0));
                     if debug {
-                        eprintln!("[DEBUG] Success: {} in {}ms", endpoint.name, elapsed.as_millis());
+                        eprintln!(
+                            "[DEBUG] Success: {} in {}ms",
+                            endpoint.name,
+                            elapsed.as_millis()
+                        );
                     }
-                    
+
                     response.into_json::<YesCodeApiResponse>().ok()
                 } else {
                     if debug {
-                        eprintln!("[DEBUG] Failed: {} status {}", endpoint.name, response.status());
+                        eprintln!(
+                            "[DEBUG] Failed: {} status {}",
+                            endpoint.name,
+                            response.status()
+                        );
                     }
                     None
                 }
@@ -137,16 +143,16 @@ impl QuotaSegment {
 
     fn load_api_key(&self) -> Option<String> {
         // 优先级：环境变量 > Claude Code settings.json > api_key 文件
-        
+
         // 1. 环境变量
         if let Ok(key) = env::var("YESCODE_API_KEY") {
             return Some(key);
         }
-        
+
         if let Ok(key) = env::var("ANTHROPIC_API_KEY") {
             return Some(key);
         }
-        
+
         if let Ok(key) = env::var("ANTHROPIC_AUTH_TOKEN") {
             return Some(key);
         }
@@ -196,9 +202,7 @@ impl QuotaSegment {
 
     fn get_today_cost(&self, response: &YesCodeApiResponse) -> Option<f64> {
         // 获取最新一天的数据（假设数组是按日期排序的）
-        response.daily_usage
-            .first()
-            .map(|usage| usage.total_cost)
+        response.daily_usage.first().map(|usage| usage.total_cost)
     }
 }
 
@@ -212,9 +216,11 @@ impl Segment for QuotaSegment {
         #[cfg(feature = "quota")]
         {
             let api_key = self.load_api_key()?;
-            
+
             // 使用静态方法进行端点检测
-            if let Some((endpoint_url, response)) = SmartEndpointDetector::detect_endpoint_static(&api_key) {
+            if let Some((endpoint_url, response)) =
+                SmartEndpointDetector::detect_endpoint_static(&api_key)
+            {
                 if let Some(today_cost) = self.get_today_cost(&response) {
                     let daily_spent = self.format_daily_spent(today_cost);
 
@@ -242,7 +248,7 @@ impl Segment for QuotaSegment {
                 // 所有端点都失败
                 let mut metadata = HashMap::new();
                 metadata.insert("status".to_string(), "offline".to_string());
-                
+
                 Some(SegmentData {
                     primary: "Offline".to_string(),
                     secondary: String::new(),
