@@ -60,7 +60,7 @@ jobs:
       if: matrix.os != 'windows-latest' && matrix.target != 'x86_64-pc-windows-gnu'
       run: |
         mkdir -p dist
-        cp target/${{ matrix.target }}/release/ccometixline dist/ccline
+        cp target/${{ matrix.target }}/release/ccometixline-yescc dist/ccline
         cd dist
         tar czf ../${{ matrix.name }} ccline
 
@@ -68,7 +68,7 @@ jobs:
       if: matrix.target == 'x86_64-pc-windows-gnu'
       run: |
         mkdir -p dist
-        cp target/${{ matrix.target }}/release/ccometixline.exe dist/ccline.exe
+        cp target/${{ matrix.target }}/release/ccometixline-yescc.exe dist/ccline.exe
         cd dist
         zip ../${{ matrix.name }} ccline.exe
 
@@ -137,20 +137,20 @@ jobs:
       run: |
         # Prepare packages with version management
         node npm/scripts/prepare-packages.js
-        
+
         # Copy binaries to platform directories
         cp extracted/ccline-darwin-x64 npm-publish/darwin-x64/ccline
         cp extracted/ccline-darwin-arm64 npm-publish/darwin-arm64/ccline
         cp extracted/ccline-linux-x64 npm-publish/linux-x64/ccline
         cp extracted/ccline-linux-x64-musl npm-publish/linux-x64-musl/ccline
         cp extracted/ccline-win32-x64.exe npm-publish/win32-x64/ccline.exe
-        
+
         # Set executable permissions for Unix binaries
         chmod +x npm-publish/darwin-x64/ccline
         chmod +x npm-publish/darwin-arm64/ccline
         chmod +x npm-publish/linux-x64/ccline
         chmod +x npm-publish/linux-x64-musl/ccline
-        
+
         # Verify packages
         echo "Package structure:"
         find npm-publish -name "package.json" -exec echo "=== {} ===" \; -exec head -5 {} \;
@@ -161,11 +161,11 @@ jobs:
       run: |
         # Publish platform packages first
         for platform in darwin-x64 darwin-arm64 linux-x64 linux-x64-musl win32-x64; do
-          echo "📦 Publishing @cometix/ccline-$platform"
+          echo "📦 Publishing @hobeeliu/ccline-yescc-$platform"
           cd npm-publish/$platform
           npm publish --access public
           cd ../..
-          echo "✅ Published @cometix/ccline-$platform"
+          echo "✅ Published @hobeeliu/ccline-yescc-$platform"
         done
 
     - name: Wait for NPM registry
@@ -178,9 +178,9 @@ jobs:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       run: |
         cd npm-publish/main
-        echo "📦 Publishing @cometix/ccline"
+        echo "📦 Publishing @hobeeliu/ccline-yescc"
         npm publish --access public
-        echo "✅ Published @cometix/ccline"
+        echo "✅ Published @hobeeliu/ccline-yescc"
         echo ""
         echo "🎉 NPM packages published successfully!"
-        echo "Install with: npm install -g @cometix/ccline"
+        echo "Install with: npm install -g @hobeeliu/ccline-yescc"
