@@ -338,8 +338,15 @@ impl ThemePresets {
     pub fn theme_exists(theme_name: &str) -> bool {
         // Check built-in themes
         let built_in_themes = vec![
-            "cometix", "default", "minimal", "gruvbox", "nord",
-            "powerline-dark", "powerline-light", "powerline-rose-pine", "powerline-tokyo-night"
+            "cometix",
+            "default",
+            "minimal",
+            "gruvbox",
+            "nord",
+            "powerline-dark",
+            "powerline-light",
+            "powerline-rose-pine",
+            "powerline-tokyo-night",
         ];
 
         if built_in_themes.contains(&theme_name) {
@@ -356,8 +363,15 @@ impl ThemePresets {
     pub fn delete_theme(theme_name: &str) -> Result<(), Box<dyn std::error::Error>> {
         // Don't allow deleting built-in themes
         let built_in_themes = vec![
-            "cometix", "default", "minimal", "gruvbox", "nord",
-            "powerline-dark", "powerline-light", "powerline-rose-pine", "powerline-tokyo-night"
+            "cometix",
+            "default",
+            "minimal",
+            "gruvbox",
+            "nord",
+            "powerline-dark",
+            "powerline-light",
+            "powerline-rose-pine",
+            "powerline-tokyo-night",
         ];
 
         if built_in_themes.contains(&theme_name) {
@@ -375,7 +389,10 @@ impl ThemePresets {
     }
 
     /// Copy an existing theme to create a new one
-    pub fn copy_theme(source_theme: &str, new_theme: &str) -> Result<(), Box<dyn std::error::Error>> {
+    pub fn copy_theme(
+        source_theme: &str,
+        new_theme: &str,
+    ) -> Result<(), Box<dyn std::error::Error>> {
         let source_config = Self::get_theme(source_theme);
         Self::save_theme(new_theme, &source_config)?;
         Ok(())
@@ -384,8 +401,15 @@ impl ThemePresets {
     /// Get theme type (built-in or custom)
     pub fn get_theme_type(theme_name: &str) -> &'static str {
         let built_in_themes = vec![
-            "cometix", "default", "minimal", "gruvbox", "nord",
-            "powerline-dark", "powerline-light", "powerline-rose-pine", "powerline-tokyo-night"
+            "cometix",
+            "default",
+            "minimal",
+            "gruvbox",
+            "nord",
+            "powerline-dark",
+            "powerline-light",
+            "powerline-rose-pine",
+            "powerline-tokyo-night",
         ];
 
         if built_in_themes.contains(&theme_name) {

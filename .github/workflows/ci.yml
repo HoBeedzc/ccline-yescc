@@ -93,7 +93,7 @@ jobs:
       if: matrix.os != 'windows-latest'
       run: |
         mkdir -p dist
-        cp target/${{ matrix.target }}/release/ccometixline-packycc dist/ccline
+        cp target/${{ matrix.target }}/release/ccometixline-yescc dist/ccline
         cd dist
         tar czf ../${{ matrix.name }}-${{ github.sha }}.tar.gz ccline
 
@@ -101,7 +101,7 @@ jobs:
       if: matrix.os == 'windows-latest'
       run: |
         mkdir dist
-        copy "target\${{ matrix.target }}\release\ccometixline-packycc.exe" "dist\ccline.exe"
+        copy "target\${{ matrix.target }}\release\ccometixline-yescc.exe" "dist\ccline.exe"
         cd dist
         7z a "..\${{ matrix.name }}-${{ github.sha }}.zip" ccline.exe
 
