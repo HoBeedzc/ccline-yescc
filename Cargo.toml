@@ -2,8 +2,8 @@
 name = "ccometixline-yescc"
 version = "1.0.5"
 edition = "2021"
-description = "CCometixLine (ccline) - High-performance Claude Code StatusLine tool written in Rust"
-authors = ["Haleclipse"]
+description = "CCometixLine (ccline) - High-performance Claude Code StatusLine tool written in Rust (YesCode version)"
+authors = ["Hobee Liu"]
 license = "MIT"
 repository = "https://github.com/HoBeedzc/ccline-yescc"
 readme = "README.md"
