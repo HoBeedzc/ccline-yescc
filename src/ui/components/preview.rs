@@ -185,6 +185,7 @@ impl PreviewComponent {
                 },
                 SegmentId::Quota => SegmentData {
                     primary: "$88.48".to_string(),
+                    secondary: "".to_string(),
                     metadata: {
                         let mut map = HashMap::new();
                         map.insert("raw_spent".to_string(), "88.4846".to_string());

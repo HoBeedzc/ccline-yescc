@@ -224,6 +224,7 @@ impl Segment for QuotaSegment {
 
                     Some(SegmentData {
                         primary: daily_spent,
+                        secondary: String::new(),
                         metadata,
                     })
                 } else {
@@ -233,6 +234,7 @@ impl Segment for QuotaSegment {
 
                     Some(SegmentData {
                         primary: "$0.00".to_string(),
+                        secondary: String::new(),
                         metadata,
                     })
                 }
@@ -243,6 +245,7 @@ impl Segment for QuotaSegment {
                 
                 Some(SegmentData {
                     primary: "Offline".to_string(),
+                    secondary: String::new(),
                     metadata,
                 })
             }
