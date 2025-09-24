@@ -62,7 +62,7 @@ jobs:
         mkdir -p dist
         cp target/${{ matrix.target }}/release/ccline-yescc dist/ccline-yescc
         cd dist
-        tar czf ../${{ matrix.name }} ccline
+        tar czf ../${{ matrix.name }} ccline-yescc
 
     - name: Package Windows
       if: matrix.target == 'x86_64-pc-windows-gnu'
@@ -70,7 +70,7 @@ jobs:
         mkdir -p dist
         cp target/${{ matrix.target }}/release/ccline-yescc.exe dist/ccline-yescc.exe
         cd dist
-        zip ../${{ matrix.name }} ccline.exe
+        zip ../${{ matrix.name }} ccline-yescc.exe
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
@@ -112,19 +112,19 @@ jobs:
         
         # macOS x64
         tar -xzf artifacts/ccline-yescc-macos-x64.tar.gz/ccline-yescc-macos-x64.tar.gz -C extracted
-        mv extracted/ccline-yesccextracted/ccline-yescc-darwin-x64
+        mv extracted/ccline-yescc extracted/ccline-yescc-darwin-x64
         
         # macOS ARM64
         tar -xzf artifacts/ccline-yescc-macos-arm64.tar.gz/ccline-yescc-macos-arm64.tar.gz -C extracted
-        mv extracted/ccline-yesccextracted/ccline-yescc-darwin-arm64
+        mv extracted/ccline-yescc extracted/ccline-yescc-darwin-arm64
         
         # Linux x64
         tar -xzf artifacts/ccline-yescc-linux-x64.tar.gz/ccline-yescc-linux-x64.tar.gz -C extracted
-        mv extracted/ccline-yesccextracted/ccline-yescc-linux-x64
+        mv extracted/ccline-yescc extracted/ccline-yescc-linux-x64
         
         # Linux musl (static)
         tar -xzf artifacts/ccline-yescc-linux-x64-static.tar.gz/ccline-yescc-linux-x64-static.tar.gz -C extracted
-        mv extracted/ccline-yesccextracted/ccline-yescc-linux-x64-musl
+        mv extracted/ccline-yescc extracted/ccline-yescc-linux-x64-musl
         
         # Windows
         unzip artifacts/ccline-yescc-windows-x64.zip/ccline-yescc-windows-x64.zip -d extracted
