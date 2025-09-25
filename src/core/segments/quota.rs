@@ -15,6 +15,14 @@ struct YesCodeApiResponse {
 }
 
 #[derive(Debug, Deserialize)]
+struct BalanceApiResponse {
+    balance: f64,
+    pay_as_you_go_balance: f64,
+    subscription_balance: f64,
+    total_balance: f64,
+}
+
+#[derive(Debug, Deserialize)]
 struct DailyUsage {
     #[allow(dead_code)]
     date: String,
@@ -24,6 +32,12 @@ struct DailyUsage {
 // 端点配置
 #[derive(Debug, Clone)]
 struct EndpointConfig {
+    url: String,
+    name: String,
+}
+
+#[derive(Debug, Clone)]
+struct BalanceEndpointConfig {
     url: String,
     name: String,
 }
@@ -51,6 +65,13 @@ impl SmartEndpointDetector {
         }];
 
         Self { endpoints }
+    }
+
+    fn get_balance_endpoint() -> BalanceEndpointConfig {
+        BalanceEndpointConfig {
+            url: "https://co.yes.vg/api/v1/user/balance".to_string(),
+            name: "balance".to_string(),
+        }
     }
 
     #[allow(dead_code)]
@@ -135,6 +156,54 @@ impl SmartEndpointDetector {
         let mut detector = SmartEndpointDetector::new();
         detector.detect_endpoint(api_key)
     }
+
+    fn try_balance_endpoint(api_key: &str) -> Option<BalanceApiResponse> {
+        let endpoint = Self::get_balance_endpoint();
+        let debug = env::var("YESCODE_DEBUG").is_ok();
+
+        if debug {
+            eprintln!("[DEBUG] Trying balance endpoint: {}", endpoint.url);
+        }
+
+        let start_time = SystemTime::now();
+        let result = ureq::get(&endpoint.url)
+            .set("accept", "application/json")
+            .set("X-API-Key", api_key)
+            .timeout(Duration::from_secs(5))
+            .call();
+
+        match result {
+            Ok(response) => {
+                if response.status() == 200 {
+                    let elapsed = start_time.elapsed().unwrap_or(Duration::from_secs(0));
+                    if debug {
+                        eprintln!(
+                            "[DEBUG] Balance Success: {} in {}ms",
+                            endpoint.name,
+                            elapsed.as_millis()
+                        );
+                    }
+
+                    response.into_json::<BalanceApiResponse>().ok()
+                } else {
+                    if debug {
+                        eprintln!(
+                            "[DEBUG] Balance Failed: {} status {}",
+                            endpoint.name,
+                            response.status()
+                        );
+                    }
+                    None
+                }
+            }
+            Err(e) => {
+                if debug {
+                    eprintln!("[DEBUG] Balance Error: {} - {}", endpoint.name, e);
+                }
+                None
+            }
+        }
+    }
 }
 
 #[derive(Default)]
@@ -201,7 +270,11 @@ impl QuotaSegment {
     }
 
     fn format_daily_spent(&self, spent: f64) -> String {
-        format!("${:.2}", spent)
+        format!("Used:${:.2}", spent)
+    }
+
+    fn format_balance(&self, balance: f64) -> String {
+        format!("Left:${:.2}", balance)
     }
 
     fn get_today_cost(&self, response: &YesCodeApiResponse) -> Option<f64> {
@@ -228,23 +301,38 @@ impl Segment for QuotaSegment {
                 if let Some(today_cost) = self.get_today_cost(&response) {
                     let daily_spent = self.format_daily_spent(today_cost);
 
+                    // 尝试获取余额信息
+                    let secondary = if let Some(balance_response) =
+                        SmartEndpointDetector::try_balance_endpoint(&api_key) {
+                        self.format_balance(balance_response.total_balance)
+                    } else {
+                        "Balance Unknown".to_string()
+                    };
+
                     let mut metadata = HashMap::new();
                     metadata.insert("raw_spent".to_string(), today_cost.to_string());
                     metadata.insert("endpoint_used".to_string(), endpoint_url);
 
                     Some(SegmentData {
                         primary: daily_spent,
-                        secondary: String::new(),
+                        secondary,
                         metadata,
                     })
                 } else {
-                    // 今天没有数据
+                    // 今天没有数据，但仍尝试获取余额
+                    let secondary = if let Some(balance_response) =
+                        SmartEndpointDetector::try_balance_endpoint(&api_key) {
+                        self.format_balance(balance_response.total_balance)
+                    } else {
+                        "Balance Unknown".to_string()
+                    };
+
                     let mut metadata = HashMap::new();
                     metadata.insert("status".to_string(), "no_data_today".to_string());
 
                     Some(SegmentData {
-                        primary: "$0.00".to_string(),
-                        secondary: String::new(),
+                        primary: "Used:$0.00".to_string(),
+                        secondary,
                         metadata,
                     })
                 }
@@ -255,7 +343,7 @@ impl Segment for QuotaSegment {
 
                 Some(SegmentData {
                     primary: "Offline".to_string(),
-                    secondary: String::new(),
+                    secondary: "Offline".to_string(),
                     metadata,
                 })
             }
