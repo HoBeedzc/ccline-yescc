@@ -1,13 +1,13 @@
 {
-  "name": "@hobeeliu/ccline-yescc-win32-x64",
+  "name": "@hobeeliu/ccline-88cc-win32-x64",
   "version": "0.0.0",
-  "description": "Windows x64 binary for ccline-yescc",
-  "files": ["ccline-yescc.exe"],
+  "description": "Windows x64 binary for ccline-88cc",
+  "files": ["ccline-88cc.exe"],
   "os": ["win32"],
   "cpu": ["x64"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/HoBeedzc/ccline-yescc"
+    "url": "https://github.com/byebye-code/ccline-88cc"
   },
   "author": "Hobee Liu",
   "license": "MIT"

@@ -1,13 +1,13 @@
 {
-  "name": "@hobeeliu/ccline-yescc-linux-x64-musl",
+  "name": "@hobeeliu/ccline-88cc-linux-x64-musl",
   "version": "0.0.0",
-  "description": "Linux x64 static binary for ccline-yescc (musl libc)",
-  "files": ["ccline-yescc"],
+  "description": "Linux x64 static binary for ccline-88cc (musl libc)",
+  "files": ["ccline-88cc"],
   "os": ["linux"],
   "cpu": ["x64"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/HoBeedzc/ccline-yescc"
+    "url": "https://github.com/byebye-code/ccline-88cc"
   },
   "author": "Hobee Liu",
   "license": "MIT"

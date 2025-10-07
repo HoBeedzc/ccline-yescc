@@ -1,13 +1,13 @@
 {
-  "name": "@hobeeliu/ccline-yescc-darwin-x64",
+  "name": "@hobeeliu/ccline-88cc-darwin-x64",
   "version": "0.0.0",
-  "description": "macOS x64 binary for ccline-yescc",
-  "files": ["ccline-yescc"],
+  "description": "macOS x64 binary for ccline-88cc",
+  "files": ["ccline-88cc"],
   "os": ["darwin"],
   "cpu": ["x64"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/HoBeedzc/ccline-yescc"
+    "url": "https://github.com/byebye-code/ccline-88cc"
   },
   "author": "Hobee Liu",
   "license": "MIT"

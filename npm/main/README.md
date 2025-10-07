@@ -1,11 +1,11 @@
-# @hobeeliu/ccline-yescc
+# @hobeeliu/ccline-88cc
 
-ccline-yescc - High-performance Claude Code StatusLine tool
+ccline-88cc - High-performance Claude Code StatusLine tool
 
 ## Installation
 
 ```bash
-npm install -g @hobeeliu/ccline-yescc
+npm install -g @hobeeliu/ccline-88cc
 ```
 
 ## Features
@@ -19,13 +19,13 @@ npm install -g @hobeeliu/ccline-yescc
 
 ## Usage
 
-After installation, ccline-yescc is automatically configured for Claude Code at `~/.claude/ccline/ccline-yescc`.
+After installation, ccline-88cc is automatically configured for Claude Code at `~/.claude/ccline/ccline-88cc`.
 
 You can also use it directly:
 
 ```bash
-ccline-yescc --help
-ccline-yescc --version
+ccline-88cc --help
+ccline-88cc --version
 ```
 
 ## For Users in China
@@ -33,11 +33,11 @@ ccline-yescc --version
 Use npm mirror for faster installation:
 
 ```bash
-npm install -g @hobeeliu/ccline-yescc --registry https://registry.npmmirror.com
+npm install -g @hobeeliu/ccline-88cc --registry https://registry.npmmirror.com
 ```
 
 ## More Information
 
-- GitHub: https://github.com/HoBeedzc/ccline-yescc
-- Issues: https://github.com/HoBeedzc/ccline-yescc/issues
+- GitHub: https://github.com/byebye-code/ccline-88cc
+- Issues: https://github.com/byebye-code/ccline-88cc/issues
 - License: MIT
