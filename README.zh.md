@@ -1,18 +1,18 @@
-# CCometixLine-YesCC
+# CCometixLine-88CC
 
 [English](README.md) | [中文](README.zh.md)
 
 基于 Rust 的高性能 Claude Code 状态栏工具，集成 Git 信息、使用量跟踪、交互式 TUI 配置、API 配额监控和 Claude Code 增强工具。
 
-> **由 [HoBeedzc](https://github.com/HoBeedzc) 维护** - 这是专为 YesCode 服务特别适配的 CCometixLine 版本。原始 CCometixLine 由 [Haleclipse](https://github.com/Haleclipse/CCometixLine) 在 MIT 许可证下创建。本项目同样在 MIT 许可证下发布。
+> **由 [HoBeedzc](https://github.com/HoBeedzc) 维护** - 这是专为 88Code 服务特别适配的 CCometixLine 版本。原始 CCometixLine 由 [Haleclipse](https://github.com/Haleclipse/CCometixLine) 在 MIT 许可证下创建。本项目同样在 MIT 许可证下发布。
 >
 > 本项目还整合了另一个 MIT 许可证项目 [ccline-packycc](https://github.com/ding113/ccline-packycc) 的代码，并保留了相应归属。
 >
-> YesCode 是第三方 Claude Code 代理服务。本项目是自发的第三方适配，与 Anthropic 或 YesCode 无关。YesCode 网站：[yescode](https://co.yes.vg/)。本项目实现了对两个端点的自动适配。
+> 88Code 是第三方 Claude Code 代理服务。本项目是自发的第三方适配，与 Anthropic 或 88Code 无关。88Code 网站：[88code](https://www.88code.org/)。本项目实现了对两个端点的自动适配。
 
 ![Language:Rust](https://img.shields.io/static/v1?label=Language&message=Rust&color=orange&style=flat-square)
 ![License:MIT](https://img.shields.io/static/v1?label=License&message=MIT&color=blue&style=flat-square)
-[![CI](https://github.com/HoBeedzc/ccline-yescc/actions/workflows/ci.yml/badge.svg)](https://github.com/HoBeedzc/ccline-yescc/actions/workflows/ci.yml)
+[![CI](https://github.com/byebye-code/ccline-88cc/actions/workflows/ci.yml/badge.svg)](https://github.com/byebye-code/ccline-88cc/actions/workflows/ci.yml)
 
 ## 截图
 
@@ -51,24 +51,24 @@
 
 ```bash
 # 全局安装
-npm install -g @hobeeliu/ccline-yescc
+npm install -g @hobeeliu/ccline-88cc
 
 # 或使用 yarn
-yarn global add @hobeeliu/ccline-yescc
+yarn global add @hobeeliu/ccline-88cc
 
 # 或使用 pnpm
-pnpm add -g @hobeeliu/ccline-yescc
+pnpm add -g @hobeeliu/ccline-88cc
 ```
 
 使用镜像源加速下载：
 ```bash
-npm install -g @hobeeliu/ccline-yescc --registry https://registry.npmmirror.com
+npm install -g @hobeeliu/ccline-88cc --registry https://registry.npmmirror.com
 ```
 
 安装后：
-- ✅ 全局命令 `ccline-yescc` 可在任何地方使用
+- ✅ 全局命令 `ccline-88cc` 可在任何地方使用
 - ⚙️ 按照下方提示进行配置以集成到 Claude Code
-- 🎨 运行 `ccline-yescc -c` 打开配置面板进行主题选择
+- 🎨 运行 `ccline-88cc -c` 打开配置面板进行主题选择
 
 ### Claude Code 配置
 
@@ -79,7 +79,7 @@ npm install -g @hobeeliu/ccline-yescc --registry https://registry.npmmirror.com
 {
   "statusLine": {
     "type": "command", 
-    "command": "~/.claude/ccline/ccline-yescc",
+    "command": "~/.claude/ccline/ccline-88cc",
     "padding": 0
   }
 }
@@ -90,7 +90,7 @@ npm install -g @hobeeliu/ccline-yescc --registry https://registry.npmmirror.com
 {
   "statusLine": {
     "type": "command", 
-    "command": "%USERPROFILE%\\.claude\\ccline\\ccline-yescc.exe",
+    "command": "%USERPROFILE%\\.claude\\ccline\\ccline-88cc.exe",
     "padding": 0
   }
 }
@@ -101,7 +101,7 @@ npm install -g @hobeeliu/ccline-yescc --registry https://registry.npmmirror.com
 {
   "statusLine": {
     "type": "command", 
-    "command": "ccline-yescc",
+    "command": "ccline-88cc",
     "padding": 0
   }
 }
@@ -111,33 +111,33 @@ npm install -g @hobeeliu/ccline-yescc --registry https://registry.npmmirror.com
 ### 更新
 
 ```bash
-npm update -g @hobeeliu/ccline-yescc
+npm update -g @hobeeliu/ccline-88cc
 ```
 
 <details>
 <summary>手动安装（点击展开）</summary>
 
-或者从 [Releases](https://github.com/HoBeedzc/ccline-yescc/releases) 手动下载：
+或者从 [Releases](https://github.com/byebye-code/ccline-88cc/releases) 手动下载：
 
 #### Linux
 
 #### 选项 1: 动态链接版本（推荐）
 ```bash
 mkdir -p ~/.claude/ccline
-wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-linux-x64.tar.gz
-tar -xzf ccline-yescc-linux-x64.tar.gz
-cp ccline-yescc ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline-yescc
+wget https://github.com/byebye-code/ccline-88cc/releases/latest/download/ccline-88cc-linux-x64.tar.gz
+tar -xzf ccline-88cc-linux-x64.tar.gz
+cp ccline-88cc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-88cc
 ```
 *系统要求: Ubuntu 22.04+, CentOS 9+, Debian 11+, RHEL 9+ (glibc 2.35+)*
 
 #### 选项 2: 静态链接版本（通用兼容）
 ```bash
 mkdir -p ~/.claude/ccline
-wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-linux-x64-static.tar.gz
-tar -xzf ccline-yescc-linux-x64-static.tar.gz
-cp ccline-yescc ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline-yescc
+wget https://github.com/byebye-code/ccline-88cc/releases/latest/download/ccline-88cc-linux-x64-static.tar.gz
+tar -xzf ccline-88cc-linux-x64-static.tar.gz
+cp ccline-88cc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-88cc
 ```
 *适用于任何 Linux 发行版（静态链接，无依赖）*
 
@@ -145,30 +145,30 @@ chmod +x ~/.claude/ccline/ccline-yescc
 
 ```bash  
 mkdir -p ~/.claude/ccline
-wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-macos-x64.tar.gz
-tar -xzf ccline-yescc-macos-x64.tar.gz
-cp ccline-yescc ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline-yescc
+wget https://github.com/byebye-code/ccline-88cc/releases/latest/download/ccline-88cc-macos-x64.tar.gz
+tar -xzf ccline-88cc-macos-x64.tar.gz
+cp ccline-88cc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-88cc
 ```
 
 #### macOS (Apple Silicon)
 
 ```bash
 mkdir -p ~/.claude/ccline  
-wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-macos-arm64.tar.gz
-tar -xzf ccline-yescc-macos-arm64.tar.gz
-cp ccline-yescc ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline-yescc
+wget https://github.com/byebye-code/ccline-88cc/releases/latest/download/ccline-88cc-macos-arm64.tar.gz
+tar -xzf ccline-88cc-macos-arm64.tar.gz
+cp ccline-88cc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-88cc
 ```
 
 #### Windows
 
 ```powershell
 # 创建目录并下载
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline-yescc"
-Invoke-WebRequest -Uri "https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-windows-x64.zip" -OutFile "ccline-yescc-windows-x64.zip"
-Expand-Archive -Path "ccline-yescc-windows-x64.zip" -DestinationPath "."
-Move-Item "ccline-yescc.exe" "$env:USERPROFILE\.claude\ccline-yescc\"
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline-88cc"
+Invoke-WebRequest -Uri "https://github.com/byebye-code/ccline-88cc/releases/latest/download/ccline-88cc-windows-x64.zip" -OutFile "ccline-88cc-windows-x64.zip"
+Expand-Archive -Path "ccline-88cc-windows-x64.zip" -DestinationPath "."
+Move-Item "ccline-88cc.exe" "$env:USERPROFILE\.claude\ccline-88cc\"
 ```
 
 </details>
@@ -176,18 +176,18 @@ Move-Item "ccline-yescc.exe" "$env:USERPROFILE\.claude\ccline-yescc\"
 ### 从源码构建
 
 ```bash
-git clone https://github.com/HoBeedzc/ccline-yescc.git
-cd ccline-yescc
+git clone https://github.com/byebye-code/ccline-88cc.git
+cd ccline-88cc
 cargo build --release
 
 # Linux/macOS
 mkdir -p ~/.claude/ccline
-cp target/release/ccometixline ~/.claude/ccline-yescc/ccline-yescc
-chmod +x ~/.claude/ccline/ccline-yescc
+cp target/release/ccometixline ~/.claude/ccline-88cc/ccline-88cc
+chmod +x ~/.claude/ccline/ccline-88cc
 
 # Windows (PowerShell)
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline-yescc"
-copy target\release\ccometixline.exe "$env:USERPROFILE\.claude\ccline-yescc\ccline-yescc.exe"
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline-88cc"
+copy target\release\ccometixline.exe "$env:USERPROFILE\.claude\ccline-88cc\ccline-88cc.exe"
 ```
 
 ## 使用
@@ -196,40 +196,40 @@ copy target\release\ccometixline.exe "$env:USERPROFILE\.claude\ccline-yescc\ccli
 
 ```bash
 # 初始化配置文件
-ccline-yescc --init
+ccline-88cc --init
 
 # 检查配置有效性  
-ccline-yescc --check
+ccline-88cc --check
 
 # 打印当前配置
-ccline-yescc --print
+ccline-88cc --print
 
 # 进入 TUI 配置模式
-ccline-yescc --config
+ccline-88cc --config
 ```
 
 ### 主题覆盖
 
 ```bash
 # 临时使用指定主题（覆盖配置文件设置）
-ccline-yescc --theme cometix
-ccline-yescc --theme minimal
-ccline-yescc --theme gruvbox
-ccline-yescc --theme nord
-ccline-yescc --theme powerline-dark
+ccline-88cc --theme cometix
+ccline-88cc --theme minimal
+ccline-88cc --theme gruvbox
+ccline-88cc --theme nord
+ccline-88cc --theme powerline-dark
 
-# 或使用 ~/.claude/ccline-yescc/themes/ 目录下的自定义主题
-ccline-yescc --theme my-custom-theme
+# 或使用 ~/.claude/ccline-88cc/themes/ 目录下的自定义主题
+ccline-88cc --theme my-custom-theme
 ```
 
 ### Claude Code 增强
 
 ```bash
 # 禁用上下文警告并启用详细模式
-ccline-yescc --patch /path/to/claude-code/cli.js
+ccline-88cc --patch /path/to/claude-code/cli.js
 
 # 常见安装路径示例
-ccline-yescc --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/node_modules/@anthropic-ai/claude-code/cli.js
+ccline-88cc --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/node_modules/@anthropic-ai/claude-code/cli.js
 ```
 
 ## 默认段落
@@ -255,13 +255,13 @@ ccline-yescc --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/n
 ### API 配额显示
 智能监控 API 使用情况：
 
-- **每日花费**: 精确的每日使用金额 (例如 `$88.48`)
+- **额度显示**: 显示套餐名称和已用/总额度 (例如 `Pro $0.06/$20.25`)
 - **自动检测**: 自动检测正确的 API 端点
 - **零配置**: 只需提供 API 密钥，其他都是自动的
 
 支持多种 API 密钥来源：
 
-- 环境变量: `YESCODE_API_KEY`, `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`
+- 环境变量: `C88_API_KEY`, `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`
 - Claude Code settings.json
 - 本地 API 密钥文件: `~/.claude/api_key`
 
@@ -269,10 +269,10 @@ ccline-yescc --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/n
 
 CCometixLine 支持通过 TOML 文件和交互式 TUI 进行完整配置：
 
-- **配置文件**: `~/.claude/ccline-yescc/config.toml`
-- **交互式 TUI**: `ccline-yescc --config` 实时编辑配置并预览效果
-- **主题文件**: `~/.claude/ccline-yescc/themes/*.toml` 自定义主题文件
-- **自动初始化**: `ccline-yescc --init` 创建默认配置
+- **配置文件**: `~/.claude/ccline-88cc/config.toml`
+- **交互式 TUI**: `ccline-88cc --config` 实时编辑配置并预览效果
+- **主题文件**: `~/.claude/ccline-88cc/themes/*.toml` 自定义主题文件
+- **自动初始化**: `ccline-88cc --init` 创建默认配置
 
 ### 可用段落
 
@@ -331,4 +331,4 @@ cargo build --release
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=HoBeedzc/ccline-yescc&type=Date)](https://star-history.com/#HoBeedzc/ccline-yescc&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=byebye-code/ccline-88cc&type=Date)](https://star-history.com/#byebye-code/ccline-88cc&Date)

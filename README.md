@@ -1,18 +1,18 @@
-# CCometixLine-YesCC
+# CCometixLine-88CC
 
 [English](README.md) | [中文](README.zh.md)
 
 A high-performance Claude Code statusline tool written in Rust with Git integration, usage tracking, interactive TUI configuration, API quota monitoring and Claude Code enhancement utilities.
 
-> **Maintained by [HoBeedzc](https://github.com/HoBeedzc)** - This is a specially adapted version of CCometixLine for YesCode service. The original CCometixLine was created by [Haleclipse](https://github.com/Haleclipse/CCometixLine) under MIT License. This project is also released under MIT License.
+> **Maintained by [HoBeedzc](https://github.com/HoBeedzc)** - This is a specially adapted version of CCometixLine for 88Code service. The original CCometixLine was created by [Haleclipse](https://github.com/Haleclipse/CCometixLine) under MIT License. This project is also released under MIT License.
 >
 > This project also incorporates code from another MIT-licensed project, [ccline-packycc](https://github.com/ding113/ccline-packycc), with attribution retained.
 >
-> YesCode is a third-party Claude Code proxy service. This project is a voluntary third-party adaptation and is not affiliated with Anthropic or YesCode. YesCode websites: [yescode](https://co.yes.vg/). This project implements automatic adaptation for both endpoints.
+> 88Code is a third-party Claude Code proxy service. This project is a voluntary third-party adaptation and is not affiliated with Anthropic or 88Code. 88Code websites: [88code](https://www.88code.org/). This project implements automatic adaptation for both endpoints.
 
 ![Language:Rust](https://img.shields.io/static/v1?label=Language&message=Rust&color=orange&style=flat-square)
 ![License:MIT](https://img.shields.io/static/v1?label=License&message=MIT&color=blue&style=flat-square)
-[![CI](https://github.com/HoBeedzc/ccline-yescc/actions/workflows/ci.yml/badge.svg)](https://github.com/HoBeedzc/ccline-yescc/actions/workflows/ci.yml)
+[![CI](https://github.com/byebye-code/ccline-88cc/actions/workflows/ci.yml/badge.svg)](https://github.com/byebye-code/ccline-88cc/actions/workflows/ci.yml)
 
 ## Screenshots
 
@@ -51,24 +51,24 @@ Install via npm (works on all platforms):
 
 ```bash
 # Install globally
-npm install -g @hobeeliu/ccline-yescc
+npm install -g @hobeeliu/ccline-88cc
 
 # Or using yarn
-yarn global add @hobeeliu/ccline-yescc
+yarn global add @hobeeliu/ccline-88cc
 
 # Or using pnpm
-pnpm add -g @hobeeliu/ccline-yescc
+pnpm add -g @hobeeliu/ccline-88cc
 ```
 
 Use npm mirror for faster download:
 ```bash
-npm install -g @hobeeliu/ccline-yescc --registry https://registry.npmmirror.com
+npm install -g @hobeeliu/ccline-88cc --registry https://registry.npmmirror.com
 ```
 
 After installation:
-- ✅ Global command `ccline-yescc` is available everywhere
+- ✅ Global command `ccline-88cc` is available everywhere
 - ⚙️ Follow the configuration steps below to integrate with Claude Code
-- 🎨 Run `ccline-yescc -c` to open configuration panel for theme selection
+- 🎨 Run `ccline-88cc -c` to open configuration panel for theme selection
 
 ### Claude Code Configuration
 
@@ -79,7 +79,7 @@ Add to your Claude Code `settings.json`:
 {
   "statusLine": {
     "type": "command", 
-    "command": "~/.claude/ccline/ccline-yescc",
+    "command": "~/.claude/ccline/ccline-88cc",
     "padding": 0
   }
 }
@@ -90,7 +90,7 @@ Add to your Claude Code `settings.json`:
 {
   "statusLine": {
     "type": "command", 
-    "command": "%USERPROFILE%\\.claude\\ccline\\ccline-yescc.exe",
+    "command": "%USERPROFILE%\\.claude\\ccline\\ccline-88cc.exe",
     "padding": 0
   }
 }
@@ -101,7 +101,7 @@ Add to your Claude Code `settings.json`:
 {
   "statusLine": {
     "type": "command", 
-    "command": "ccline-yescc",
+    "command": "ccline-88cc",
     "padding": 0
   }
 }
@@ -111,33 +111,33 @@ Add to your Claude Code `settings.json`:
 ### Update
 
 ```bash
-npm update -g @hobeeliu/ccline-yescc
+npm update -g @hobeeliu/ccline-88cc
 ```
 
 <details>
 <summary>Manual Installation (Click to expand)</summary>
 
-Alternatively, download from [Releases](https://github.com/HoBeedzc/ccline-yescc/releases):
+Alternatively, download from [Releases](https://github.com/byebye-code/ccline-88cc/releases):
 
 #### Linux
 
 #### Option 1: Dynamic Binary (Recommended)
 ```bash
 mkdir -p ~/.claude/ccline
-wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-linux-x64.tar.gz
-tar -xzf ccline-yescc-linux-x64.tar.gz
-cp ccline-yescc ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline-yescc
+wget https://github.com/byebye-code/ccline-88cc/releases/latest/download/ccline-88cc-linux-x64.tar.gz
+tar -xzf ccline-88cc-linux-x64.tar.gz
+cp ccline-88cc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-88cc
 ```
 *Requires: Ubuntu 22.04+, CentOS 9+, Debian 11+, RHEL 9+ (glibc 2.35+)*
 
 #### Option 2: Static Binary (Universal Compatibility)
 ```bash
 mkdir -p ~/.claude/ccline
-wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-linux-x64-static.tar.gz
-tar -xzf ccline-yescc-linux-x64-static.tar.gz
-cp ccline-yescc ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline-yescc
+wget https://github.com/byebye-code/ccline-88cc/releases/latest/download/ccline-88cc-linux-x64-static.tar.gz
+tar -xzf ccline-88cc-linux-x64-static.tar.gz
+cp ccline-88cc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-88cc
 ```
 *Works on any Linux distribution (static, no dependencies)*
 
@@ -145,30 +145,30 @@ chmod +x ~/.claude/ccline/ccline-yescc
 
 ```bash  
 mkdir -p ~/.claude/ccline
-wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-macos-x64.tar.gz
-tar -xzf ccline-yescc-macos-x64.tar.gz
-cp ccline-yescc ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline-yescc
+wget https://github.com/byebye-code/ccline-88cc/releases/latest/download/ccline-88cc-macos-x64.tar.gz
+tar -xzf ccline-88cc-macos-x64.tar.gz
+cp ccline-88cc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-88cc
 ```
 
 #### macOS (Apple Silicon)
 
 ```bash
 mkdir -p ~/.claude/ccline  
-wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-macos-arm64.tar.gz
-tar -xzf ccline-yescc-macos-arm64.tar.gz
-cp ccline-yescc ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline-yescc
+wget https://github.com/byebye-code/ccline-88cc/releases/latest/download/ccline-88cc-macos-arm64.tar.gz
+tar -xzf ccline-88cc-macos-arm64.tar.gz
+cp ccline-88cc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-88cc
 ```
 
 #### Windows
 
 ```powershell
 # Create directory and download
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline-yescc"
-Invoke-WebRequest -Uri "https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-windows-x64.zip" -OutFile "ccline-yescc-windows-x64.zip"
-Expand-Archive -Path "ccline-yescc-windows-x64.zip" -DestinationPath "."
-Move-Item "ccline-yescc.exe" "$env:USERPROFILE\.claude\ccline-yescc\"
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline-88cc"
+Invoke-WebRequest -Uri "https://github.com/byebye-code/ccline-88cc/releases/latest/download/ccline-88cc-windows-x64.zip" -OutFile "ccline-88cc-windows-x64.zip"
+Expand-Archive -Path "ccline-88cc-windows-x64.zip" -DestinationPath "."
+Move-Item "ccline-88cc.exe" "$env:USERPROFILE\.claude\ccline-88cc\"
 ```
 
 </details>
@@ -176,18 +176,18 @@ Move-Item "ccline-yescc.exe" "$env:USERPROFILE\.claude\ccline-yescc\"
 ### Build from Source
 
 ```bash
-git clone https://github.com/HoBeedzc/ccline-yescc.git
-cd ccline-yescc
+git clone https://github.com/byebye-code/ccline-88cc.git
+cd ccline-88cc
 cargo build --release
 
 # Linux/macOS
 mkdir -p ~/.claude/ccline
-cp target/release/ccometixline ~/.claude/ccline-yescc/ccline-yescc
-chmod +x ~/.claude/ccline/ccline-yescc
+cp target/release/ccometixline ~/.claude/ccline-88cc/ccline-88cc
+chmod +x ~/.claude/ccline/ccline-88cc
 
 # Windows (PowerShell)
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline-yescc"
-copy target\release\ccometixline.exe "$env:USERPROFILE\.claude\ccline-yescc\ccline-yescc.exe"
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline-88cc"
+copy target\release\ccometixline.exe "$env:USERPROFILE\.claude\ccline-88cc\ccline-88cc.exe"
 ```
 
 ## Usage
@@ -196,40 +196,40 @@ copy target\release\ccometixline.exe "$env:USERPROFILE\.claude\ccline-yescc\ccli
 
 ```bash
 # Initialize configuration file
-ccline-yescc --init
+ccline-88cc --init
 
 # Check configuration validity  
-ccline-yescc --check
+ccline-88cc --check
 
 # Print current configuration
-ccline-yescc --print
+ccline-88cc --print
 
 # Enter TUI configuration mode
-ccline-yescc --config
+ccline-88cc --config
 ```
 
 ### Theme Override
 
 ```bash
 # Temporarily use specific theme (overrides config file)
-ccline-yescc --theme cometix
-ccline-yescc --theme minimal
-ccline-yescc --theme gruvbox
-ccline-yescc --theme nord
-ccline-yescc --theme powerline-dark
+ccline-88cc --theme cometix
+ccline-88cc --theme minimal
+ccline-88cc --theme gruvbox
+ccline-88cc --theme nord
+ccline-88cc --theme powerline-dark
 
-# Or use custom theme files from ~/.claude/ccline-yescc/themes/
-ccline-yescc --theme my-custom-theme
+# Or use custom theme files from ~/.claude/ccline-88cc/themes/
+ccline-88cc --theme my-custom-theme
 ```
 
 ### Claude Code Enhancement
 
 ```bash
 # Disable context warnings and enable verbose mode
-ccline-yescc --patch /path/to/claude-code/cli.js
+ccline-88cc --patch /path/to/claude-code/cli.js
 
 # Example for common installation
-ccline-yescc --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/node_modules/@anthropic-ai/claude-code/cli.js
+ccline-88cc --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/node_modules/@anthropic-ai/claude-code/cli.js
 ```
 
 ## Default Segments
@@ -255,13 +255,13 @@ Token usage percentage based on transcript analysis with context limit tracking.
 ### API Quota Display
 Smart monitoring of API usage:
 
-- **Daily spent**: Precise daily usage amount (e.g., `$88.48`)
+- **Usage display**: Shows subscription name and used/total credits (e.g., `Pro $0.06/$20.25`)
 - **Auto-detection**: Automatically detects the correct API endpoint
 - **Zero configuration**: Just provide your API key, everything else is automatic
 
 Supports multiple API key sources:
 
-- Environment variables: `YESCODE_API_KEY`, `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`
+- Environment variables: `C88_API_KEY`, `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`
 - Claude Code settings.json
 - Local API key file: `~/.claude/api_key`
 
@@ -269,10 +269,10 @@ Supports multiple API key sources:
 
 CCometixLine supports full configuration via TOML files and interactive TUI:
 
-- **Configuration file**: `~/.claude/ccline-yescc/config.toml`
-- **Interactive TUI**: `ccline-yescc --config` for real-time editing with preview
-- **Theme files**: `~/.claude/ccline-yescc/themes/*.toml` for custom themes
-- **Automatic initialization**: `ccline-yescc --init` creates default configuration
+- **Configuration file**: `~/.claude/ccline-88cc/config.toml`
+- **Interactive TUI**: `ccline-88cc --config` for real-time editing with preview
+- **Theme files**: `~/.claude/ccline-88cc/themes/*.toml` for custom themes
+- **Automatic initialization**: `ccline-88cc --init` creates default configuration
 
 ### Available Segments
 
@@ -330,4 +330,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=HoBeedzc/ccline-yescc&type=Date)](https://star-history.com/#HoBeedzc/ccline-yescc&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=byebye-code/ccline-88cc&type=Date)](https://star-history.com/#byebye-code/ccline-88cc&Date)
