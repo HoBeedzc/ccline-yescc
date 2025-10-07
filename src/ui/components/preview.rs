@@ -184,14 +184,17 @@ impl PreviewComponent {
                     },
                 },
                 SegmentId::Quota => SegmentData {
-                    primary: "$88.48".to_string(),
+                    primary: "Pro $0.06/$20.25".to_string(),
                     secondary: "".to_string(),
                     metadata: {
                         let mut map = HashMap::new();
-                        map.insert("raw_spent".to_string(), "88.4846".to_string());
+                        map.insert("used".to_string(), "0.0635".to_string());
+                        map.insert("total".to_string(), "20.25".to_string());
+                        map.insert("remain".to_string(), "20.1865".to_string());
+                        map.insert("subscription_name".to_string(), "Pro".to_string());
                         map.insert(
                             "endpoint_used".to_string(),
-                            "https://co.yes.vg/api/v1/user/usage/daily".to_string(),
+                            "https://www.88code.org/api/usage".to_string(),
                         );
                         map
                     },

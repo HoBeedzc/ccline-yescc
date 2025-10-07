@@ -10,15 +10,13 @@ use std::time::{Duration, SystemTime};
 
 // API 响应结构
 #[derive(Debug, Deserialize)]
-struct YesCodeApiResponse {
-    daily_usage: Vec<DailyUsage>,
-}
-
-#[derive(Debug, Deserialize)]
-struct DailyUsage {
-    #[allow(dead_code)]
-    date: String,
-    total_cost: f64,
+struct C88ApiResponse {
+    #[serde(rename = "creditLimit")]
+    credit_limit: f64,
+    #[serde(rename = "currentCredits")]
+    current_credits: f64,
+    #[serde(rename = "subscriptionName")]
+    subscription_name: Option<String>,
 }
 
 // 端点配置
@@ -46,7 +44,7 @@ struct SmartEndpointDetector {
 impl SmartEndpointDetector {
     fn new() -> Self {
         let endpoints = vec![EndpointConfig {
-            url: "https://co.yes.vg/api/v1/user/usage/daily".to_string(),
+            url: "https://www.88code.org/api/usage".to_string(),
             name: "main".to_string(),
         }];
 
@@ -71,18 +69,19 @@ impl SmartEndpointDetector {
         hasher.finish()
     }
 
-    fn try_endpoint(&self, endpoint: &EndpointConfig, api_key: &str) -> Option<YesCodeApiResponse> {
-        let debug = env::var("YESCODE_DEBUG").is_ok();
+    fn try_endpoint(&self, endpoint: &EndpointConfig, api_key: &str) -> Option<C88ApiResponse> {
+        let debug = env::var("C88_DEBUG").is_ok();
 
         if debug {
             eprintln!("[DEBUG] Trying endpoint: {}", endpoint.url);
         }
 
         let start_time = SystemTime::now();
-        let result = ureq::get(&endpoint.url)
+        let bearer_token = format!("Bearer {}", api_key);
+        let result = ureq::post(&endpoint.url)
             .set("accept", "*/*")
             .set("content-type", "application/json")
-            .set("X-API-Key", api_key)
+            .set("Authorization", &bearer_token)
             .timeout(Duration::from_secs(5))
             .call();
 
@@ -98,7 +97,7 @@ impl SmartEndpointDetector {
                         );
                     }
 
-                    response.into_json::<YesCodeApiResponse>().ok()
+                    response.into_json::<C88ApiResponse>().ok()
                 } else {
                     if debug {
                         eprintln!(
@@ -119,7 +118,7 @@ impl SmartEndpointDetector {
         }
     }
 
-    fn detect_endpoint(&mut self, api_key: &str) -> Option<(String, YesCodeApiResponse)> {
+    fn detect_endpoint(&mut self, api_key: &str) -> Option<(String, C88ApiResponse)> {
         // 尝试所有端点
         let endpoints_clone = self.endpoints.clone();
         for endpoint in &endpoints_clone {
@@ -131,7 +130,7 @@ impl SmartEndpointDetector {
         None
     }
 
-    fn detect_endpoint_static(api_key: &str) -> Option<(String, YesCodeApiResponse)> {
+    fn detect_endpoint_static(api_key: &str) -> Option<(String, C88ApiResponse)> {
         let mut detector = SmartEndpointDetector::new();
         detector.detect_endpoint(api_key)
     }
@@ -149,7 +148,7 @@ impl QuotaSegment {
         // 优先级：环境变量 > Claude Code settings.json > api_key 文件
 
         // 1. 环境变量
-        if let Ok(key) = env::var("YESCODE_API_KEY") {
+        if let Ok(key) = env::var("C88_API_KEY") {
             return Some(key);
         }
 
@@ -200,13 +199,16 @@ impl QuotaSegment {
         None
     }
 
-    fn format_daily_spent(&self, spent: f64) -> String {
-        format!("${:.2}", spent)
+    fn format_quota(&self, subscription_name: Option<&str>, used: f64, total: f64) -> String {
+        if let Some(name) = subscription_name {
+            format!("{} ${:.2}/${:.2}", name, used, total)
+        } else {
+            format!("${:.2}/${:.2}", used, total)
+        }
     }
 
-    fn get_today_cost(&self, response: &YesCodeApiResponse) -> Option<f64> {
-        // 获取最新一天的数据（假设数组是按日期排序的）
-        response.daily_usage.first().map(|usage| usage.total_cost)
+    fn calculate_used(&self, response: &C88ApiResponse) -> f64 {
+        response.credit_limit - response.current_credits
     }
 }
 
@@ -225,29 +227,24 @@ impl Segment for QuotaSegment {
             if let Some((endpoint_url, response)) =
                 SmartEndpointDetector::detect_endpoint_static(&api_key)
             {
-                if let Some(today_cost) = self.get_today_cost(&response) {
-                    let daily_spent = self.format_daily_spent(today_cost);
+                let used = self.calculate_used(&response);
+                let total = response.credit_limit;
+                let quota_display = self.format_quota(response.subscription_name.as_deref(), used, total);
 
-                    let mut metadata = HashMap::new();
-                    metadata.insert("raw_spent".to_string(), today_cost.to_string());
-                    metadata.insert("endpoint_used".to_string(), endpoint_url);
-
-                    Some(SegmentData {
-                        primary: daily_spent,
-                        secondary: String::new(),
-                        metadata,
-                    })
-                } else {
-                    // 今天没有数据
-                    let mut metadata = HashMap::new();
-                    metadata.insert("status".to_string(), "no_data_today".to_string());
-
-                    Some(SegmentData {
-                        primary: "$0.00".to_string(),
-                        secondary: String::new(),
-                        metadata,
-                    })
+                let mut metadata = HashMap::new();
+                metadata.insert("used".to_string(), used.to_string());
+                metadata.insert("total".to_string(), total.to_string());
+                metadata.insert("remain".to_string(), response.current_credits.to_string());
+                metadata.insert("endpoint_used".to_string(), endpoint_url);
+                if let Some(name) = &response.subscription_name {
+                    metadata.insert("subscription_name".to_string(), name.clone());
                 }
+
+                Some(SegmentData {
+                    primary: quota_display,
+                    secondary: String::new(),
+                    metadata,
+                })
             } else {
                 // 所有端点都失败
                 let mut metadata = HashMap::new();
