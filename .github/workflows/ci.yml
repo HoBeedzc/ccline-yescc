@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ master, main ]
+    branches: [ yescode, 88code ]
   pull_request:
-    branches: [ master, main ]
+    branches: [ yescode, 88code ]
   workflow_dispatch:
 
 env:
@@ -155,7 +155,7 @@ jobs:
     name: Create Nightly Release
     runs-on: ubuntu-latest
     needs: [test, build-nightly]
-    if: github.ref == 'refs/heads/master' && needs.test.result == 'success' && needs.build-nightly.result == 'success'
+    if: (github.ref == 'refs/heads/yescode' || github.ref == 'refs/heads/88code') && needs.test.result == 'success' && needs.build-nightly.result == 'success'
     permissions:
       contents: write
     steps:
@@ -212,7 +212,7 @@ jobs:
 
           ## ⚠️ Important Notes
 
-          - This is a **development build** from the latest `master` branch
+          - This is a **development build** from the `${{ github.ref_name }}` branch
           - Use at your own risk - may contain bugs or incomplete features
           - For stable releases, see the [Releases](https://github.com/${{ github.repository }}/releases) page
           - Install via NPM: `npm install -g @hobeeliu/ccline-yescc` (stable)
