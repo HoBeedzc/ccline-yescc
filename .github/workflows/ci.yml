@@ -215,7 +215,7 @@ jobs:
           - This is a **development build** from the latest `master` branch
           - Use at your own risk - may contain bugs or incomplete features
           - For stable releases, see the [Releases](https://github.com/${{ github.repository }}/releases) page
-          - Install via NPM: `npm install -g @hobeeliu/ccline-88cc` (stable)
+          - Install via NPM: `npm install -g @byebyecode/ccline-88cc` (stable)
 
           ## 🚀 What's New
 

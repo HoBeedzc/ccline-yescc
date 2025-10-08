@@ -1,11 +1,11 @@
-# @hobeeliu/ccline-88cc
+# @byebyecode/ccline-88cc
 
 ccline-88cc - High-performance Claude Code StatusLine tool
 
 ## Installation
 
 ```bash
-npm install -g @hobeeliu/ccline-88cc
+npm install -g @byebyecode/ccline-88cc
 ```
 
 ## Features

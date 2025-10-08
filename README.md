@@ -51,18 +51,18 @@ Install via npm (works on all platforms):
 
 ```bash
 # Install globally
-npm install -g @hobeeliu/ccline-88cc
+npm install -g @byebyecode/ccline-88cc
 
 # Or using yarn
-yarn global add @hobeeliu/ccline-88cc
+yarn global add @byebyecode/ccline-88cc
 
 # Or using pnpm
-pnpm add -g @hobeeliu/ccline-88cc
+pnpm add -g @byebyecode/ccline-88cc
 ```
 
 Use npm mirror for faster download:
 ```bash
-npm install -g @hobeeliu/ccline-88cc --registry https://registry.npmmirror.com
+npm install -g @byebyecode/ccline-88cc --registry https://registry.npmmirror.com
 ```
 
 After installation:
@@ -111,7 +111,7 @@ Add to your Claude Code `settings.json`:
 ### Update
 
 ```bash
-npm update -g @hobeeliu/ccline-88cc
+npm update -g @byebyecode/ccline-88cc
 ```
 
 <details>

@@ -1,5 +1,5 @@
 {
-  "name": "@hobeeliu/ccline-88cc-linux-x64",
+  "name": "@byebyecode/ccline-88cc-linux-x64",
   "version": "0.0.0",
   "description": "Linux x64 binary for ccline-88cc",
   "files": ["ccline-88cc"],

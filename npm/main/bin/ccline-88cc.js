@@ -58,12 +58,12 @@ if (platform === 'linux') {
 }
 
 const packageMap = {
-  'darwin-x64': '@hobeeliu/ccline-88cc-darwin-x64',
-  'darwin-arm64': '@hobeeliu/ccline-88cc-darwin-arm64',
-  'linux-x64': '@hobeeliu/ccline-88cc-linux-x64',
-  'linux-x64-musl': '@hobeeliu/ccline-88cc-linux-x64-musl',
-  'win32-x64': '@hobeeliu/ccline-88cc-win32-x64',
-  'win32-ia32': '@hobeeliu/ccline-88cc-win32-x64', // Use 64-bit for 32-bit systems
+  'darwin-x64': '@byebyecode/ccline-88cc-darwin-x64',
+  'darwin-arm64': '@byebyecode/ccline-88cc-darwin-arm64',
+  'linux-x64': '@byebyecode/ccline-88cc-linux-x64',
+  'linux-x64-musl': '@byebyecode/ccline-88cc-linux-x64-musl',
+  'win32-x64': '@byebyecode/ccline-88cc-win32-x64',
+  'win32-ia32': '@byebyecode/ccline-88cc-win32-x64', // Use 64-bit for 32-bit systems
 };
 
 const packageName = packageMap[platformKey];
@@ -80,7 +80,7 @@ const binaryPath = path.join(__dirname, '..', 'node_modules', packageName, binar
 if (!fs.existsSync(binaryPath)) {
   console.error(`Error: Binary not found at ${binaryPath}`);
   console.error('This might indicate a failed installation or unsupported platform.');
-  console.error('Please try reinstalling: npm install -g @hobeeliu/ccline-88cc');
+  console.error('Please try reinstalling: npm install -g @byebyecode/ccline-88cc');
   console.error(`Expected package: ${packageName}`);
   process.exit(1);
 }

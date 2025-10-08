@@ -51,18 +51,18 @@
 
 ```bash
 # 全局安装
-npm install -g @hobeeliu/ccline-88cc
+npm install -g @byebyecode/ccline-88cc
 
 # 或使用 yarn
-yarn global add @hobeeliu/ccline-88cc
+yarn global add @byebyecode/ccline-88cc
 
 # 或使用 pnpm
-pnpm add -g @hobeeliu/ccline-88cc
+pnpm add -g @byebyecode/ccline-88cc
 ```
 
 使用镜像源加速下载：
 ```bash
-npm install -g @hobeeliu/ccline-88cc --registry https://registry.npmmirror.com
+npm install -g @byebyecode/ccline-88cc --registry https://registry.npmmirror.com
 ```
 
 安装后：
@@ -111,7 +111,7 @@ npm install -g @hobeeliu/ccline-88cc --registry https://registry.npmmirror.com
 ### 更新
 
 ```bash
-npm update -g @hobeeliu/ccline-88cc
+npm update -g @byebyecode/ccline-88cc
 ```
 
 <details>

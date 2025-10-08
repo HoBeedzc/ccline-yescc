@@ -1,5 +1,5 @@
 {
-  "name": "@hobeeliu/ccline-88cc",
+  "name": "@byebyecode/ccline-88cc",
   "version": "0.0.0",
   "description": "ccline-88cc - High-performance Claude Code StatusLine tool with API quota monitoring",
   "bin": {
@@ -9,11 +9,11 @@
     "postinstall": "node scripts/postinstall.js"
   },
   "optionalDependencies": {
-    "@hobeeliu/ccline-88cc-darwin-x64": "0.0.0",
-    "@hobeeliu/ccline-88cc-darwin-arm64": "0.0.0",
-    "@hobeeliu/ccline-88cc-linux-x64": "0.0.0",
-    "@hobeeliu/ccline-88cc-linux-x64-musl": "0.0.0",
-    "@hobeeliu/ccline-88cc-win32-x64": "0.0.0"
+    "@byebyecode/ccline-88cc-darwin-x64": "0.0.0",
+    "@byebyecode/ccline-88cc-darwin-arm64": "0.0.0",
+    "@byebyecode/ccline-88cc-linux-x64": "0.0.0",
+    "@byebyecode/ccline-88cc-linux-x64-musl": "0.0.0",
+    "@byebyecode/ccline-88cc-win32-x64": "0.0.0"
   },
   "repository": {
     "type": "git",
