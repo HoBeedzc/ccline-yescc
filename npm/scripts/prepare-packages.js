@@ -2,12 +2,20 @@
 const fs = require('fs');
 const path = require('path');
 
-const version = process.env.GITHUB_REF?.replace('refs/tags/v', '') || process.argv[2];
+let version = process.env.GITHUB_REF?.replace('refs/tags/v', '') || process.argv[2];
 if (!version) {
   console.error('Error: Version not provided');
   console.error('Usage: GITHUB_REF=refs/tags/v1.0.0 node prepare-packages.js');
   console.error('   or: node prepare-packages.js 1.0.0');
   process.exit(1);
+}
+
+// Remove -88code or -yescode suffix if present (for branch-specific tags)
+// Keep other suffixes like -beta, -alpha, -rc for pre-release versions
+const originalVersion = version;
+version = version.replace(/-(88code|yescode)$/, '');
+if (originalVersion !== version) {
+  console.log(`📝 Tag suffix removed: ${originalVersion} → ${version}`);
 }
 
 console.log(`🚀 Preparing packages for version ${version}`);
