@@ -1,17 +1,24 @@
-# CCometixLine
+# CCometixLine-88CC
 
 [English](README.md) | [中文](README.zh.md)
 
-A high-performance Claude Code statusline tool written in Rust with Git integration, usage tracking, interactive TUI configuration, and Claude Code enhancement utilities.
+A high-performance Claude Code statusline tool written in Rust with Git integration, usage tracking, interactive TUI configuration, API quota monitoring and Claude Code enhancement utilities.
+
+> **Maintained by [HoBeedzc](https://github.com/HoBeedzc)** - This is a specially adapted version of CCometixLine for 88Code service. The original CCometixLine was created by [Haleclipse](https://github.com/Haleclipse/CCometixLine) under MIT License. This project is also released under MIT License.
+>
+> This project also incorporates code from another MIT-licensed project, [ccline-packycc](https://github.com/ding113/ccline-packycc), with attribution retained.
+>
+> 88Code is a third-party Claude Code proxy service. This project is a voluntary third-party adaptation and is not affiliated with Anthropic or 88Code. 88Code websites: [88code](https://www.88code.org/). This project implements automatic adaptation for both endpoints.
 
 ![Language:Rust](https://img.shields.io/static/v1?label=Language&message=Rust&color=orange&style=flat-square)
 ![License:MIT](https://img.shields.io/static/v1?label=License&message=MIT&color=blue&style=flat-square)
+[![CI](https://github.com/byebye-code/ccline-88cc/actions/workflows/ci.yml/badge.svg)](https://github.com/byebye-code/ccline-88cc/actions/workflows/ci.yml)
 
 ## Screenshots
 
 ![CCometixLine](assets/img1.png)
 
-The statusline shows: Model | Directory | Git Branch Status | Context Window Information
+The statusline shows: Model | Directory | Git Branch Status | Context Window | API Quota
 
 ## Features
 
@@ -20,6 +27,7 @@ The statusline shows: Model | Directory | Git Branch Status | Context Window Inf
 - **Model display** with simplified Claude model names
 - **Usage tracking** based on transcript analysis
 - **Directory display** showing current workspace
+- **API Quota display** showing current API quota
 - **Minimal design** using Nerd Font icons
 
 ### Interactive TUI Features
@@ -43,24 +51,24 @@ Install via npm (works on all platforms):
 
 ```bash
 # Install globally
-npm install -g @cometix/ccline
+npm install -g @byebyecode/ccline-88cc
 
 # Or using yarn
-yarn global add @cometix/ccline
+yarn global add @byebyecode/ccline-88cc
 
 # Or using pnpm
-pnpm add -g @cometix/ccline
+pnpm add -g @byebyecode/ccline-88cc
 ```
 
 Use npm mirror for faster download:
 ```bash
-npm install -g @cometix/ccline --registry https://registry.npmmirror.com
+npm install -g @byebyecode/ccline-88cc --registry https://registry.npmmirror.com
 ```
 
 After installation:
-- ✅ Global command `ccline` is available everywhere
+- ✅ Global command `ccline-88cc` is available everywhere
 - ⚙️ Follow the configuration steps below to integrate with Claude Code
-- 🎨 Run `ccline -c` to open configuration panel for theme selection
+- 🎨 Run `ccline-88cc -c` to open configuration panel for theme selection
 
 ### Claude Code Configuration
 
@@ -71,7 +79,7 @@ Add to your Claude Code `settings.json`:
 {
   "statusLine": {
     "type": "command", 
-    "command": "~/.claude/ccline/ccline",
+    "command": "~/.claude/ccline/ccline-88cc",
     "padding": 0
   }
 }
@@ -82,7 +90,7 @@ Add to your Claude Code `settings.json`:
 {
   "statusLine": {
     "type": "command", 
-    "command": "%USERPROFILE%\\.claude\\ccline\\ccline.exe",
+    "command": "%USERPROFILE%\\.claude\\ccline\\ccline-88cc.exe",
     "padding": 0
   }
 }
@@ -93,7 +101,7 @@ Add to your Claude Code `settings.json`:
 {
   "statusLine": {
     "type": "command", 
-    "command": "ccline",
+    "command": "ccline-88cc",
     "padding": 0
   }
 }
@@ -103,33 +111,33 @@ Add to your Claude Code `settings.json`:
 ### Update
 
 ```bash
-npm update -g @cometix/ccline
+npm update -g @byebyecode/ccline-88cc
 ```
 
 <details>
 <summary>Manual Installation (Click to expand)</summary>
 
-Alternatively, download from [Releases](https://github.com/Haleclipse/CCometixLine/releases):
+Alternatively, download from [Releases](https://github.com/byebye-code/ccline-88cc/releases):
 
 #### Linux
 
 #### Option 1: Dynamic Binary (Recommended)
 ```bash
 mkdir -p ~/.claude/ccline
-wget https://github.com/Haleclipse/CCometixLine/releases/latest/download/ccline-linux-x64.tar.gz
-tar -xzf ccline-linux-x64.tar.gz
-cp ccline ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline
+wget https://github.com/byebye-code/ccline-88cc/releases/latest/download/ccline-88cc-linux-x64.tar.gz
+tar -xzf ccline-88cc-linux-x64.tar.gz
+cp ccline-88cc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-88cc
 ```
 *Requires: Ubuntu 22.04+, CentOS 9+, Debian 11+, RHEL 9+ (glibc 2.35+)*
 
 #### Option 2: Static Binary (Universal Compatibility)
 ```bash
 mkdir -p ~/.claude/ccline
-wget https://github.com/Haleclipse/CCometixLine/releases/latest/download/ccline-linux-x64-static.tar.gz
-tar -xzf ccline-linux-x64-static.tar.gz
-cp ccline ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline
+wget https://github.com/byebye-code/ccline-88cc/releases/latest/download/ccline-88cc-linux-x64-static.tar.gz
+tar -xzf ccline-88cc-linux-x64-static.tar.gz
+cp ccline-88cc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-88cc
 ```
 *Works on any Linux distribution (static, no dependencies)*
 
@@ -137,30 +145,30 @@ chmod +x ~/.claude/ccline/ccline
 
 ```bash  
 mkdir -p ~/.claude/ccline
-wget https://github.com/Haleclipse/CCometixLine/releases/latest/download/ccline-macos-x64.tar.gz
-tar -xzf ccline-macos-x64.tar.gz
-cp ccline ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline
+wget https://github.com/byebye-code/ccline-88cc/releases/latest/download/ccline-88cc-macos-x64.tar.gz
+tar -xzf ccline-88cc-macos-x64.tar.gz
+cp ccline-88cc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-88cc
 ```
 
 #### macOS (Apple Silicon)
 
 ```bash
 mkdir -p ~/.claude/ccline  
-wget https://github.com/Haleclipse/CCometixLine/releases/latest/download/ccline-macos-arm64.tar.gz
-tar -xzf ccline-macos-arm64.tar.gz
-cp ccline ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline
+wget https://github.com/byebye-code/ccline-88cc/releases/latest/download/ccline-88cc-macos-arm64.tar.gz
+tar -xzf ccline-88cc-macos-arm64.tar.gz
+cp ccline-88cc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-88cc
 ```
 
 #### Windows
 
 ```powershell
 # Create directory and download
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline"
-Invoke-WebRequest -Uri "https://github.com/Haleclipse/CCometixLine/releases/latest/download/ccline-windows-x64.zip" -OutFile "ccline-windows-x64.zip"
-Expand-Archive -Path "ccline-windows-x64.zip" -DestinationPath "."
-Move-Item "ccline.exe" "$env:USERPROFILE\.claude\ccline\"
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline-88cc"
+Invoke-WebRequest -Uri "https://github.com/byebye-code/ccline-88cc/releases/latest/download/ccline-88cc-windows-x64.zip" -OutFile "ccline-88cc-windows-x64.zip"
+Expand-Archive -Path "ccline-88cc-windows-x64.zip" -DestinationPath "."
+Move-Item "ccline-88cc.exe" "$env:USERPROFILE\.claude\ccline-88cc\"
 ```
 
 </details>
@@ -168,18 +176,18 @@ Move-Item "ccline.exe" "$env:USERPROFILE\.claude\ccline\"
 ### Build from Source
 
 ```bash
-git clone https://github.com/Haleclipse/CCometixLine.git
-cd CCometixLine
+git clone https://github.com/byebye-code/ccline-88cc.git
+cd ccline-88cc
 cargo build --release
 
 # Linux/macOS
 mkdir -p ~/.claude/ccline
-cp target/release/ccometixline ~/.claude/ccline/ccline
-chmod +x ~/.claude/ccline/ccline
+cp target/release/ccometixline ~/.claude/ccline-88cc/ccline-88cc
+chmod +x ~/.claude/ccline/ccline-88cc
 
 # Windows (PowerShell)
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline"
-copy target\release\ccometixline.exe "$env:USERPROFILE\.claude\ccline\ccline.exe"
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline-88cc"
+copy target\release\ccometixline.exe "$env:USERPROFILE\.claude\ccline-88cc\ccline-88cc.exe"
 ```
 
 ## Usage
@@ -188,45 +196,45 @@ copy target\release\ccometixline.exe "$env:USERPROFILE\.claude\ccline\ccline.exe
 
 ```bash
 # Initialize configuration file
-ccline --init
+ccline-88cc --init
 
 # Check configuration validity  
-ccline --check
+ccline-88cc --check
 
 # Print current configuration
-ccline --print
+ccline-88cc --print
 
 # Enter TUI configuration mode
-ccline --config
+ccline-88cc --config
 ```
 
 ### Theme Override
 
 ```bash
 # Temporarily use specific theme (overrides config file)
-ccline --theme cometix
-ccline --theme minimal
-ccline --theme gruvbox
-ccline --theme nord
-ccline --theme powerline-dark
+ccline-88cc --theme cometix
+ccline-88cc --theme minimal
+ccline-88cc --theme gruvbox
+ccline-88cc --theme nord
+ccline-88cc --theme powerline-dark
 
-# Or use custom theme files from ~/.claude/ccline/themes/
-ccline --theme my-custom-theme
+# Or use custom theme files from ~/.claude/ccline-88cc/themes/
+ccline-88cc --theme my-custom-theme
 ```
 
 ### Claude Code Enhancement
 
 ```bash
 # Disable context warnings and enable verbose mode
-ccline --patch /path/to/claude-code/cli.js
+ccline-88cc --patch /path/to/claude-code/cli.js
 
 # Example for common installation
-ccline --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/node_modules/@anthropic-ai/claude-code/cli.js
+ccline-88cc --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/node_modules/@anthropic-ai/claude-code/cli.js
 ```
 
 ## Default Segments
 
-Displays: `Directory | Git Branch Status | Model | Context Window`
+Displays: `Directory | Git Branch Status | Model | Context Window | API Quota`
 
 ### Git Status Indicators
 
@@ -244,14 +252,27 @@ Shows simplified Claude model names:
 
 Token usage percentage based on transcript analysis with context limit tracking.
 
+### API Quota Display
+Smart monitoring of API usage:
+
+- **Usage display**: Shows subscription name and used/total credits (e.g., `Pro $0.06/$20.25`)
+- **Auto-detection**: Automatically detects the correct API endpoint
+- **Zero configuration**: Just provide your API key, everything else is automatic
+
+Supports multiple API key sources:
+
+- Environment variables: `C88_API_KEY`, `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`
+- Claude Code settings.json
+- Local API key file: `~/.claude/api_key`
+
 ## Configuration
 
 CCometixLine supports full configuration via TOML files and interactive TUI:
 
-- **Configuration file**: `~/.claude/ccline/config.toml`
-- **Interactive TUI**: `ccline --config` for real-time editing with preview
-- **Theme files**: `~/.claude/ccline/themes/*.toml` for custom themes
-- **Automatic initialization**: `ccline --init` creates default configuration
+- **Configuration file**: `~/.claude/ccline-88cc/config.toml`
+- **Interactive TUI**: `ccline-88cc --config` for real-time editing with preview
+- **Theme files**: `~/.claude/ccline-88cc/themes/*.toml` for custom themes
+- **Automatic initialization**: `ccline-88cc --init` creates default configuration
 
 ### Available Segments
 
@@ -300,6 +321,8 @@ Contributions are welcome! Please feel free to submit issues or pull requests.
 ## Related Projects
 
 - [tweakcc](https://github.com/Piebald-AI/tweakcc) - Command-line tool to customize your Claude Code themes, thinking verbs, and more.
+- [CCometixLine](https://github.com/Haleclipse/CCometixLine) - Original high-performance Claude Code status line tool written in Rust (upstream project).
+- [ccline-packycc](https://github.com/ding113/ccline-packycc) - Another high-performance Claude Code status line tool written in Rust.
 
 ## License
 
@@ -307,4 +330,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Haleclipse/CCometixLine&type=Date)](https://star-history.com/#Haleclipse/CCometixLine&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=byebye-code/ccline-88cc&type=Date)](https://star-history.com/#byebye-code/ccline-88cc&Date)

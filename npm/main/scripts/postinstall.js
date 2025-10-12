@@ -53,12 +53,12 @@ try {
   }
 
   const packageMap = {
-    'darwin-x64': '@cometix/ccline-darwin-x64',
-    'darwin-arm64': '@cometix/ccline-darwin-arm64',
-    'linux-x64': '@cometix/ccline-linux-x64',
-    'linux-x64-musl': '@cometix/ccline-linux-x64-musl',
-    'win32-x64': '@cometix/ccline-win32-x64',
-    'win32-ia32': '@cometix/ccline-win32-x64', // Use 64-bit for 32-bit
+    'darwin-x64': '@byebyecode/ccline-88cc-darwin-x64',
+    'darwin-arm64': '@byebyecode/ccline-88cc-darwin-arm64',
+    'linux-x64': '@byebyecode/ccline-88cc-linux-x64',
+    'linux-x64-musl': '@byebyecode/ccline-88cc-linux-x64-musl',
+    'win32-x64': '@byebyecode/ccline-88cc-win32-x64',
+    'win32-ia32': '@byebyecode/ccline-88cc-win32-x64', // Use 64-bit for 32-bit
   };
 
   const packageName = packageMap[platformKey];
@@ -69,7 +69,7 @@ try {
     process.exit(0);
   }
 
-  const binaryName = platform === 'win32' ? 'ccline.exe' : 'ccline';
+  const binaryName = platform === 'win32' ? 'ccline-88cc.exe' : 'ccline-88cc';
   const targetPath = path.join(claudeDir, binaryName);
 
   // Multiple path search strategies for different package managers
@@ -123,7 +123,7 @@ try {
   if (!sourcePath) {
     if (!silent) {
       console.log('Binary package not installed, skipping Claude Code setup');
-      console.log('The global ccline command will still work via npm');
+      console.log('The global ccline-88cc command will still work via npm');
     }
     process.exit(0);
   }
@@ -148,13 +148,13 @@ try {
   if (!silent) {
     console.log('✨ CCometixLine is ready for Claude Code!');
     console.log(`📍 Location: ${targetPath}`);
-    console.log('🎉 You can now use: ccline --help');
+    console.log('🎉 You can now use: ccline-88cc --help');
   }
 } catch (error) {
   // Silent failure - don't break installation
   if (!silent) {
     console.log('Note: Could not auto-configure for Claude Code');
-    console.log('The global ccline command will still work.');
-    console.log('You can manually copy ccline to ~/.claude/ccline/ if needed');
+    console.log('The global ccline-88cc command will still work.');
+    console.log('You can manually copy ccline-88cc to ~/.claude/ccline/ if needed');
   }
 }
