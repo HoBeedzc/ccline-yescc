@@ -1,26 +1,26 @@
 {
-  "name": "@cometix/ccline",
+  "name": "@hobeeliu/ccline-yescc",
   "version": "0.0.0",
-  "description": "CCometixLine - High-performance Claude Code StatusLine tool",
+  "description": "ccline-yescc - High-performance Claude Code StatusLine tool with API quota monitoring",
   "bin": {
-    "ccline": "./bin/ccline.js"
+    "ccline-yescc": "./bin/ccline-yescc.js"
   },
   "scripts": {
     "postinstall": "node scripts/postinstall.js"
   },
   "optionalDependencies": {
-    "@cometix/ccline-darwin-x64": "0.0.0",
-    "@cometix/ccline-darwin-arm64": "0.0.0",
-    "@cometix/ccline-linux-x64": "0.0.0",
-    "@cometix/ccline-linux-x64-musl": "0.0.0",
-    "@cometix/ccline-win32-x64": "0.0.0"
+    "@hobeeliu/ccline-yescc-darwin-x64": "0.0.0",
+    "@hobeeliu/ccline-yescc-darwin-arm64": "0.0.0",
+    "@hobeeliu/ccline-yescc-linux-x64": "0.0.0",
+    "@hobeeliu/ccline-yescc-linux-x64-musl": "0.0.0",
+    "@hobeeliu/ccline-yescc-win32-x64": "0.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Haleclipse/CCometixLine"
+    "url": "https://github.com/HoBeedzc/ccline-yescc"
   },
   "keywords": ["claude", "statusline", "claude-code", "rust", "cli"],
-  "author": "Haleclipse",
+  "author": "Hobee Liu",
   "license": "MIT",
   "engines": {
     "node": ">=14.0.0"

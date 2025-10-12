@@ -1,25 +1,33 @@
-# CCometixLine
+# CCometixLine-YesCC
 
 [English](README.md) | [中文](README.zh.md)
 
-基于 Rust 的高性能 Claude Code 状态栏工具，集成 Git 信息、使用量跟踪、交互式 TUI 配置和 Claude Code 补丁工具。
+基于 Rust 的高性能 Claude Code 状态栏工具，集成 Git 信息、使用量跟踪、交互式 TUI 配置、API 配额监控和 Claude Code 增强工具。
+
+> **由 [HoBeedzc](https://github.com/HoBeedzc) 维护** - 这是专为 YesCode 服务特别适配的 CCometixLine 版本。原始 CCometixLine 由 [Haleclipse](https://github.com/Haleclipse/CCometixLine) 在 MIT 许可证下创建。本项目同样在 MIT 许可证下发布。
+>
+> 本项目还整合了另一个 MIT 许可证项目 [ccline-packycc](https://github.com/ding113/ccline-packycc) 的代码，并保留了相应归属。
+>
+> YesCode 是第三方 Claude Code 代理服务。本项目是自发的第三方适配，与 Anthropic 或 YesCode 无关。YesCode 网站：[yescode](https://co.yes.vg/)。本项目实现了对两个端点的自动适配。
 
 ![Language:Rust](https://img.shields.io/static/v1?label=Language&message=Rust&color=orange&style=flat-square)
 ![License:MIT](https://img.shields.io/static/v1?label=License&message=MIT&color=blue&style=flat-square)
+[![CI](https://github.com/HoBeedzc/ccline-yescc/actions/workflows/ci.yml/badge.svg)](https://github.com/HoBeedzc/ccline-yescc/actions/workflows/ci.yml)
 
 ## 截图
 
 ![CCometixLine](assets/img1.png)
 
-状态栏显示：模型 | 目录 | Git 分支状态 | 上下文窗口信息
+状态栏显示：模型 | 目录 | Git 分支状态 | 上下文窗口 | API 配额
 
 ## 特性
 
 ### 核心功能
 - **Git 集成** 显示分支、状态和跟踪信息
 - **模型显示** 简化的 Claude 模型名称
-- **使用量跟踪** 基于转录文件分析  
+- **使用量跟踪** 基于转录文件分析
 - **目录显示** 显示当前工作空间
+- **API 配额显示** 显示当前 API 配额
 - **简洁设计** 使用 Nerd Font 图标
 
 ### 交互式 TUI 功能
@@ -43,24 +51,24 @@
 
 ```bash
 # 全局安装
-npm install -g @cometix/ccline
+npm install -g @hobeeliu/ccline-yescc
 
 # 或使用 yarn
-yarn global add @cometix/ccline
+yarn global add @hobeeliu/ccline-yescc
 
 # 或使用 pnpm
-pnpm add -g @cometix/ccline
+pnpm add -g @hobeeliu/ccline-yescc
 ```
 
 使用镜像源加速下载：
 ```bash
-npm install -g @cometix/ccline --registry https://registry.npmmirror.com
+npm install -g @hobeeliu/ccline-yescc --registry https://registry.npmmirror.com
 ```
 
 安装后：
-- ✅ 全局命令 `ccline` 可在任何地方使用
+- ✅ 全局命令 `ccline-yescc` 可在任何地方使用
 - ⚙️ 按照下方提示进行配置以集成到 Claude Code
-- 🎨 运行 `ccline -c` 打开配置面板进行主题选择
+- 🎨 运行 `ccline-yescc -c` 打开配置面板进行主题选择
 
 ### Claude Code 配置
 
@@ -71,7 +79,7 @@ npm install -g @cometix/ccline --registry https://registry.npmmirror.com
 {
   "statusLine": {
     "type": "command", 
-    "command": "~/.claude/ccline/ccline",
+    "command": "~/.claude/ccline/ccline-yescc",
     "padding": 0
   }
 }
@@ -82,7 +90,7 @@ npm install -g @cometix/ccline --registry https://registry.npmmirror.com
 {
   "statusLine": {
     "type": "command", 
-    "command": "%USERPROFILE%\\.claude\\ccline\\ccline.exe",
+    "command": "%USERPROFILE%\\.claude\\ccline\\ccline-yescc.exe",
     "padding": 0
   }
 }
@@ -93,7 +101,7 @@ npm install -g @cometix/ccline --registry https://registry.npmmirror.com
 {
   "statusLine": {
     "type": "command", 
-    "command": "ccline",
+    "command": "ccline-yescc",
     "padding": 0
   }
 }
@@ -103,33 +111,33 @@ npm install -g @cometix/ccline --registry https://registry.npmmirror.com
 ### 更新
 
 ```bash
-npm update -g @cometix/ccline
+npm update -g @hobeeliu/ccline-yescc
 ```
 
 <details>
 <summary>手动安装（点击展开）</summary>
 
-或者从 [Releases](https://github.com/Haleclipse/CCometixLine/releases) 手动下载：
+或者从 [Releases](https://github.com/HoBeedzc/ccline-yescc/releases) 手动下载：
 
 #### Linux
 
 #### 选项 1: 动态链接版本（推荐）
 ```bash
 mkdir -p ~/.claude/ccline
-wget https://github.com/Haleclipse/CCometixLine/releases/latest/download/ccline-linux-x64.tar.gz
-tar -xzf ccline-linux-x64.tar.gz
-cp ccline ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline
+wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-linux-x64.tar.gz
+tar -xzf ccline-yescc-linux-x64.tar.gz
+cp ccline-yescc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-yescc
 ```
 *系统要求: Ubuntu 22.04+, CentOS 9+, Debian 11+, RHEL 9+ (glibc 2.35+)*
 
 #### 选项 2: 静态链接版本（通用兼容）
 ```bash
 mkdir -p ~/.claude/ccline
-wget https://github.com/Haleclipse/CCometixLine/releases/latest/download/ccline-linux-x64-static.tar.gz
-tar -xzf ccline-linux-x64-static.tar.gz
-cp ccline ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline
+wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-linux-x64-static.tar.gz
+tar -xzf ccline-yescc-linux-x64-static.tar.gz
+cp ccline-yescc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-yescc
 ```
 *适用于任何 Linux 发行版（静态链接，无依赖）*
 
@@ -137,30 +145,30 @@ chmod +x ~/.claude/ccline/ccline
 
 ```bash  
 mkdir -p ~/.claude/ccline
-wget https://github.com/Haleclipse/CCometixLine/releases/latest/download/ccline-macos-x64.tar.gz
-tar -xzf ccline-macos-x64.tar.gz
-cp ccline ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline
+wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-macos-x64.tar.gz
+tar -xzf ccline-yescc-macos-x64.tar.gz
+cp ccline-yescc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-yescc
 ```
 
 #### macOS (Apple Silicon)
 
 ```bash
 mkdir -p ~/.claude/ccline  
-wget https://github.com/Haleclipse/CCometixLine/releases/latest/download/ccline-macos-arm64.tar.gz
-tar -xzf ccline-macos-arm64.tar.gz
-cp ccline ~/.claude/ccline/
-chmod +x ~/.claude/ccline/ccline
+wget https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-macos-arm64.tar.gz
+tar -xzf ccline-yescc-macos-arm64.tar.gz
+cp ccline-yescc ~/.claude/ccline/
+chmod +x ~/.claude/ccline/ccline-yescc
 ```
 
 #### Windows
 
 ```powershell
 # 创建目录并下载
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline"
-Invoke-WebRequest -Uri "https://github.com/Haleclipse/CCometixLine/releases/latest/download/ccline-windows-x64.zip" -OutFile "ccline-windows-x64.zip"
-Expand-Archive -Path "ccline-windows-x64.zip" -DestinationPath "."
-Move-Item "ccline.exe" "$env:USERPROFILE\.claude\ccline\"
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline-yescc"
+Invoke-WebRequest -Uri "https://github.com/HoBeedzc/ccline-yescc/releases/latest/download/ccline-yescc-windows-x64.zip" -OutFile "ccline-yescc-windows-x64.zip"
+Expand-Archive -Path "ccline-yescc-windows-x64.zip" -DestinationPath "."
+Move-Item "ccline-yescc.exe" "$env:USERPROFILE\.claude\ccline-yescc\"
 ```
 
 </details>
@@ -168,10 +176,18 @@ Move-Item "ccline.exe" "$env:USERPROFILE\.claude\ccline\"
 ### 从源码构建
 
 ```bash
-git clone https://github.com/Haleclipse/CCometixLine.git
-cd CCometixLine
+git clone https://github.com/HoBeedzc/ccline-yescc.git
+cd ccline-yescc
 cargo build --release
-cp target/release/ccometixline ~/.claude/ccline/ccline
+
+# Linux/macOS
+mkdir -p ~/.claude/ccline
+cp target/release/ccometixline ~/.claude/ccline-yescc/ccline-yescc
+chmod +x ~/.claude/ccline/ccline-yescc
+
+# Windows (PowerShell)
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude\ccline-yescc"
+copy target\release\ccometixline.exe "$env:USERPROFILE\.claude\ccline-yescc\ccline-yescc.exe"
 ```
 
 ## 使用
@@ -180,45 +196,45 @@ cp target/release/ccometixline ~/.claude/ccline/ccline
 
 ```bash
 # 初始化配置文件
-ccline --init
+ccline-yescc --init
 
 # 检查配置有效性  
-ccline --check
+ccline-yescc --check
 
 # 打印当前配置
-ccline --print
+ccline-yescc --print
 
 # 进入 TUI 配置模式
-ccline --config
+ccline-yescc --config
 ```
 
 ### 主题覆盖
 
 ```bash
 # 临时使用指定主题（覆盖配置文件设置）
-ccline --theme cometix
-ccline --theme minimal
-ccline --theme gruvbox
-ccline --theme nord
-ccline --theme powerline-dark
+ccline-yescc --theme cometix
+ccline-yescc --theme minimal
+ccline-yescc --theme gruvbox
+ccline-yescc --theme nord
+ccline-yescc --theme powerline-dark
 
-# 或使用 ~/.claude/ccline/themes/ 目录下的自定义主题
-ccline --theme my-custom-theme
+# 或使用 ~/.claude/ccline-yescc/themes/ 目录下的自定义主题
+ccline-yescc --theme my-custom-theme
 ```
 
 ### Claude Code 增强
 
 ```bash
 # 禁用上下文警告并启用详细模式
-ccline --patch /path/to/claude-code/cli.js
+ccline-yescc --patch /path/to/claude-code/cli.js
 
 # 常见安装路径示例
-ccline --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/node_modules/@anthropic-ai/claude-code/cli.js
+ccline-yescc --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/node_modules/@anthropic-ai/claude-code/cli.js
 ```
 
 ## 默认段落
 
-显示：`目录 | Git 分支状态 | 模型 | 上下文窗口`
+显示：`目录 | Git 分支状态 | 模型 | 上下文窗口 | API 配额`
 
 ### Git 状态指示器
 
@@ -236,14 +252,27 @@ ccline --patch ~/.local/share/fnm/node-versions/v24.4.1/installation/lib/node_mo
 
 基于转录文件分析的令牌使用百分比，包含上下文限制跟踪。
 
+### API 配额显示
+智能监控 API 使用情况：
+
+- **每日花费**: 精确的每日使用金额 (例如 `$88.48`)
+- **自动检测**: 自动检测正确的 API 端点
+- **零配置**: 只需提供 API 密钥，其他都是自动的
+
+支持多种 API 密钥来源：
+
+- 环境变量: `YESCODE_API_KEY`, `ANTHROPIC_API_KEY`, `ANTHROPIC_AUTH_TOKEN`
+- Claude Code settings.json
+- 本地 API 密钥文件: `~/.claude/api_key`
+
 ## 配置
 
 CCometixLine 支持通过 TOML 文件和交互式 TUI 进行完整配置：
 
-- **配置文件**: `~/.claude/ccline/config.toml`
-- **交互式 TUI**: `ccline --config` 实时编辑配置并预览效果
-- **主题文件**: `~/.claude/ccline/themes/*.toml` 自定义主题文件
-- **自动初始化**: `ccline --init` 创建默认配置
+- **配置文件**: `~/.claude/ccline-yescc/config.toml`
+- **交互式 TUI**: `ccline-yescc --config` 实时编辑配置并预览效果
+- **主题文件**: `~/.claude/ccline-yescc/themes/*.toml` 自定义主题文件
+- **自动初始化**: `ccline-yescc --init` 创建默认配置
 
 ### 可用段落
 
@@ -290,10 +319,16 @@ cargo build --release
 
 欢迎贡献！请随时提交 issue 或 pull request。
 
+## 相关项目
+
+- [tweakcc](https://github.com/Piebald-AI/tweakcc) - 自定义 Claude Code 主题、思考动词等的命令行工具。
+- [CCometixLine](https://github.com/Haleclipse/CCometixLine) - 原始基于 Rust 的高性能 Claude Code 状态栏工具（上游项目）。
+- [ccline-packycc](https://github.com/ding113/ccline-packycc) - 另一个基于 Rust 的高性能 Claude Code 状态栏工具。
+
 ## 许可证
 
 本项目采用 [MIT 许可证](LICENSE)。
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Haleclipse/CCometixLine&type=Date)](https://star-history.com/#Haleclipse/CCometixLine&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=HoBeedzc/ccline-yescc&type=Date)](https://star-history.com/#HoBeedzc/ccline-yescc&Date)
