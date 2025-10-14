@@ -17,6 +17,18 @@ struct C88ApiResponse {
     current_credits: f64,
     #[serde(rename = "subscriptionName")]
     subscription_name: Option<String>,
+    #[serde(rename = "subscriptionId")]
+    subscription_id: Option<u32>,
+}
+
+// 订阅 API 响应结构
+#[derive(Debug, Deserialize)]
+struct SubscriptionResponse {
+    id: u32,
+    #[serde(rename = "resetTimes")]
+    reset_times: u32,
+    #[serde(rename = "autoResetWhenZero")]
+    auto_reset_when_zero: bool,
 }
 
 // 端点配置
@@ -210,6 +222,42 @@ impl QuotaSegment {
     fn calculate_used(&self, response: &C88ApiResponse) -> f64 {
         response.credit_limit - response.current_credits
     }
+
+    fn fetch_subscription_info(&self, api_key: &str, subscription_id: u32) -> Option<SubscriptionResponse> {
+        let url = "https://www.88code.org/api/subscription";
+        let bearer_token = format!("Bearer {}", api_key);
+
+        let result = ureq::post(url)
+            .set("accept", "*/*")
+            .set("content-type", "application/json")
+            .set("Authorization", &bearer_token)
+            .timeout(Duration::from_secs(5))
+            .call();
+
+        match result {
+            Ok(response) if response.status() == 200 => {
+                if let Ok(subscriptions) = response.into_json::<Vec<SubscriptionResponse>>() {
+                    // 查找匹配的订阅ID
+                    subscriptions.into_iter().find(|sub| sub.id == subscription_id)
+                } else {
+                    None
+                }
+            }
+            _ => None,
+        }
+    }
+
+    fn format_reset_info(&self, reset_times: u32, auto_reset: bool) -> String {
+        if reset_times > 0 {
+            if auto_reset {
+                format!("↻ {} AutoReset", reset_times)
+            } else {
+                format!("↻ {}", reset_times)
+            }
+        } else {
+            String::new()
+        }
+    }
 }
 
 impl Segment for QuotaSegment {
@@ -231,6 +279,17 @@ impl Segment for QuotaSegment {
                 let total = response.credit_limit;
                 let quota_display = self.format_quota(response.subscription_name.as_deref(), used, total);
 
+                // 获取重置次数信息
+                let reset_info = if let Some(sub_id) = response.subscription_id {
+                    if let Some(sub_info) = self.fetch_subscription_info(&api_key, sub_id) {
+                        self.format_reset_info(sub_info.reset_times, sub_info.auto_reset_when_zero)
+                    } else {
+                        String::new()
+                    }
+                } else {
+                    String::new()
+                };
+
                 let mut metadata = HashMap::new();
                 metadata.insert("used".to_string(), used.to_string());
                 metadata.insert("total".to_string(), total.to_string());
@@ -242,7 +301,7 @@ impl Segment for QuotaSegment {
 
                 Some(SegmentData {
                     primary: quota_display,
-                    secondary: String::new(),
+                    secondary: reset_info,
                     metadata,
                 })
             } else {
