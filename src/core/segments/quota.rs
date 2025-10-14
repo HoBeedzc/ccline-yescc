@@ -10,16 +10,8 @@ use std::time::{Duration, SystemTime};
 
 // API 响应结构
 #[derive(Debug, Deserialize)]
-struct YesCodeApiResponse {
+struct DailyUsageApiResponse {
     daily_usage: Vec<DailyUsage>,
-}
-
-#[derive(Debug, Deserialize)]
-struct BalanceApiResponse {
-    balance: f64,
-    pay_as_you_go_balance: f64,
-    subscription_balance: f64,
-    total_balance: f64,
 }
 
 #[derive(Debug, Deserialize)]
@@ -29,15 +21,22 @@ struct DailyUsage {
     total_cost: f64,
 }
 
+#[derive(Debug, Deserialize)]
+struct BalanceApiResponse {
+    #[allow(dead_code)]
+    balance: f64,
+    #[allow(dead_code)]
+    pay_as_you_go_balance: f64,
+    #[allow(dead_code)]
+    subscription_balance: f64,
+    total_balance: f64,
+    weekly_limit: f64,
+    weekly_spent_balance: f64,
+}
+
 // 端点配置
 #[derive(Debug, Clone)]
 struct EndpointConfig {
-    url: String,
-    name: String,
-}
-
-#[derive(Debug, Clone)]
-struct BalanceEndpointConfig {
     url: String,
     name: String,
 }
@@ -53,22 +52,18 @@ struct EndpointCache {
 }
 
 // 智能端点检测器
-struct SmartEndpointDetector {
-    endpoints: Vec<EndpointConfig>,
-}
+struct SmartEndpointDetector;
 
 impl SmartEndpointDetector {
-    fn new() -> Self {
-        let endpoints = vec![EndpointConfig {
+    fn get_daily_usage_endpoint() -> EndpointConfig {
+        EndpointConfig {
             url: "https://co.yes.vg/api/v1/user/usage/daily".to_string(),
-            name: "main".to_string(),
-        }];
-
-        Self { endpoints }
+            name: "daily_usage".to_string(),
+        }
     }
 
-    fn get_balance_endpoint() -> BalanceEndpointConfig {
-        BalanceEndpointConfig {
+    fn get_balance_endpoint() -> EndpointConfig {
+        EndpointConfig {
             url: "https://co.yes.vg/api/v1/user/balance".to_string(),
             name: "balance".to_string(),
         }
@@ -92,11 +87,12 @@ impl SmartEndpointDetector {
         hasher.finish()
     }
 
-    fn try_endpoint(&self, endpoint: &EndpointConfig, api_key: &str) -> Option<YesCodeApiResponse> {
+    fn fetch_daily_usage(api_key: &str) -> Option<DailyUsageApiResponse> {
+        let endpoint = Self::get_daily_usage_endpoint();
         let debug = env::var("YESCODE_DEBUG").is_ok();
 
         if debug {
-            eprintln!("[DEBUG] Trying endpoint: {}", endpoint.url);
+            eprintln!("[DEBUG] Fetching daily usage from: {}", endpoint.url);
         }
 
         let start_time = SystemTime::now();
@@ -119,7 +115,7 @@ impl SmartEndpointDetector {
                         );
                     }
 
-                    response.into_json::<YesCodeApiResponse>().ok()
+                    response.into_json::<DailyUsageApiResponse>().ok()
                 } else {
                     if debug {
                         eprintln!(
@@ -140,29 +136,12 @@ impl SmartEndpointDetector {
         }
     }
 
-    fn detect_endpoint(&mut self, api_key: &str) -> Option<(String, YesCodeApiResponse)> {
-        // 尝试所有端点
-        let endpoints_clone = self.endpoints.clone();
-        for endpoint in &endpoints_clone {
-            if let Some(response) = self.try_endpoint(endpoint, api_key) {
-                return Some((endpoint.url.clone(), response));
-            }
-        }
-
-        None
-    }
-
-    fn detect_endpoint_static(api_key: &str) -> Option<(String, YesCodeApiResponse)> {
-        let mut detector = SmartEndpointDetector::new();
-        detector.detect_endpoint(api_key)
-    }
-
-    fn try_balance_endpoint(api_key: &str) -> Option<BalanceApiResponse> {
+    fn fetch_balance(api_key: &str) -> Option<BalanceApiResponse> {
         let endpoint = Self::get_balance_endpoint();
         let debug = env::var("YESCODE_DEBUG").is_ok();
 
         if debug {
-            eprintln!("[DEBUG] Trying balance endpoint: {}", endpoint.url);
+            eprintln!("[DEBUG] Fetching balance from: {}", endpoint.url);
         }
 
         let start_time = SystemTime::now();
@@ -178,7 +157,7 @@ impl SmartEndpointDetector {
                     let elapsed = start_time.elapsed().unwrap_or(Duration::from_secs(0));
                     if debug {
                         eprintln!(
-                            "[DEBUG] Balance Success: {} in {}ms",
+                            "[DEBUG] Success: {} in {}ms",
                             endpoint.name,
                             elapsed.as_millis()
                         );
@@ -188,7 +167,7 @@ impl SmartEndpointDetector {
                 } else {
                     if debug {
                         eprintln!(
-                            "[DEBUG] Balance Failed: {} status {}",
+                            "[DEBUG] Failed: {} status {}",
                             endpoint.name,
                             response.status()
                         );
@@ -198,7 +177,7 @@ impl SmartEndpointDetector {
             }
             Err(e) => {
                 if debug {
-                    eprintln!("[DEBUG] Balance Error: {} - {}", endpoint.name, e);
+                    eprintln!("[DEBUG] Error: {} - {}", endpoint.name, e);
                 }
                 None
             }
@@ -269,17 +248,20 @@ impl QuotaSegment {
         None
     }
 
-    fn format_daily_spent(&self, spent: f64) -> String {
-        format!("Used:${:.2}", spent)
+    fn format_daily_used_total(&self, daily_used: f64, total: f64) -> String {
+        format!("${:.2}/${:.2}", daily_used, total)
     }
 
-    fn format_balance(&self, balance: f64) -> String {
-        format!("Left:${:.2}", balance)
+    fn format_week_limit(&self, weekly_used: f64, limit: f64) -> String {
+        format!("Week: ${:.2}/${:.0}", weekly_used, limit)
     }
 
-    fn get_today_cost(&self, response: &YesCodeApiResponse) -> Option<f64> {
-        // 获取最新一天的数据（假设数组是按日期排序的）
-        response.daily_usage.first().map(|usage| usage.total_cost)
+    fn get_today_cost(&self, response: &DailyUsageApiResponse) -> f64 {
+        response
+            .daily_usage
+            .first()
+            .map(|usage| usage.total_cost)
+            .unwrap_or(0.0)
     }
 }
 
@@ -294,50 +276,46 @@ impl Segment for QuotaSegment {
         {
             let api_key = self.load_api_key()?;
 
-            // 使用静态方法进行端点检测
-            if let Some((endpoint_url, response)) =
-                SmartEndpointDetector::detect_endpoint_static(&api_key)
-            {
-                if let Some(today_cost) = self.get_today_cost(&response) {
-                    let daily_spent = self.format_daily_spent(today_cost);
+            // 获取今日使用量
+            let daily_usage_response = SmartEndpointDetector::fetch_daily_usage(&api_key);
+            let today_cost = daily_usage_response
+                .as_ref()
+                .map(|r| self.get_today_cost(r))
+                .unwrap_or(0.0);
 
-                    // 尝试获取余额信息
-                    let secondary = if let Some(balance_response) =
-                        SmartEndpointDetector::try_balance_endpoint(&api_key) {
-                        self.format_balance(balance_response.total_balance)
-                    } else {
-                        "Balance Unknown".to_string()
-                    };
+            // 获取余额信息
+            if let Some(balance_response) = SmartEndpointDetector::fetch_balance(&api_key) {
+                // 第一块：今日已用 / 总余额
+                let primary = self.format_daily_used_total(today_cost, balance_response.total_balance);
 
-                    let mut metadata = HashMap::new();
-                    metadata.insert("raw_spent".to_string(), today_cost.to_string());
-                    metadata.insert("endpoint_used".to_string(), endpoint_url);
+                // 第二块：本周已用 / 周限制
+                let secondary = self.format_week_limit(
+                    balance_response.weekly_spent_balance,
+                    balance_response.weekly_limit,
+                );
 
-                    Some(SegmentData {
-                        primary: daily_spent,
-                        secondary,
-                        metadata,
-                    })
-                } else {
-                    // 今天没有数据，但仍尝试获取余额
-                    let secondary = if let Some(balance_response) =
-                        SmartEndpointDetector::try_balance_endpoint(&api_key) {
-                        self.format_balance(balance_response.total_balance)
-                    } else {
-                        "Balance Unknown".to_string()
-                    };
+                let mut metadata = HashMap::new();
+                metadata.insert("daily_spent".to_string(), today_cost.to_string());
+                metadata.insert(
+                    "total_balance".to_string(),
+                    balance_response.total_balance.to_string(),
+                );
+                metadata.insert(
+                    "weekly_spent".to_string(),
+                    balance_response.weekly_spent_balance.to_string(),
+                );
+                metadata.insert(
+                    "weekly_limit".to_string(),
+                    balance_response.weekly_limit.to_string(),
+                );
 
-                    let mut metadata = HashMap::new();
-                    metadata.insert("status".to_string(), "no_data_today".to_string());
-
-                    Some(SegmentData {
-                        primary: "Used:$0.00".to_string(),
-                        secondary,
-                        metadata,
-                    })
-                }
+                Some(SegmentData {
+                    primary,
+                    secondary,
+                    metadata,
+                })
             } else {
-                // 所有端点都失败
+                // API调用失败
                 let mut metadata = HashMap::new();
                 metadata.insert("status".to_string(), "offline".to_string());
 
