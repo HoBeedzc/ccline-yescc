@@ -562,9 +562,36 @@ impl App {
                         }
                     }
                     FieldSelection::Options => {
-                        // TODO: Implement options editor
-                        self.status_message =
-                            Some("Options editor not implemented yet".to_string());
+                        // Handle segment-specific options
+                        if let Some(segment) = self.config.segments.get_mut(self.selected_segment) {
+                            match segment.id {
+                                SegmentId::Quota => {
+                                    // Toggle auto_reset_enabled for Quota segment
+                                    let current_value = segment
+                                        .options
+                                        .get("auto_reset_enabled")
+                                        .and_then(|v| v.as_bool())
+                                        .unwrap_or(false);
+                                    segment.options.insert(
+                                        "auto_reset_enabled".to_string(),
+                                        serde_json::Value::Bool(!current_value),
+                                    );
+                                    self.status_message = Some(format!(
+                                        "Auto Reset {}",
+                                        if !current_value {
+                                            "enabled"
+                                        } else {
+                                            "disabled"
+                                        }
+                                    ));
+                                    self.preview.update_preview(&self.config);
+                                }
+                                _ => {
+                                    self.status_message =
+                                        Some("No options available for this segment".to_string());
+                                }
+                            }
+                        }
                     }
                 }
             }

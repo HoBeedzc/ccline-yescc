@@ -269,10 +269,25 @@ impl SettingsComponent {
                 ),
                 create_field_line(
                     FieldSelection::Options,
-                    vec![Span::raw(format!(
-                        "└─ Options: {} items",
-                        segment.options.len()
-                    ))],
+                    {
+                        // Show auto_reset_enabled status for Quota segment
+                        if segment.id == SegmentId::Quota {
+                            let auto_reset_enabled = segment
+                                .options
+                                .get("auto_reset_enabled")
+                                .and_then(|v| v.as_bool())
+                                .unwrap_or(false);
+                            vec![Span::raw(format!(
+                                "└─ Auto Reset: {}",
+                                if auto_reset_enabled { "[✓]" } else { "[ ]" }
+                            ))]
+                        } else {
+                            vec![Span::raw(format!(
+                                "└─ Options: {} items",
+                                segment.options.len()
+                            ))]
+                        }
+                    },
                 ),
             ];
             let text = Text::from(lines);

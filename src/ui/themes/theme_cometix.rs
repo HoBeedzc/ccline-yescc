@@ -177,6 +177,10 @@ pub fn quota_segment() -> SegmentConfig {
             background: None,
         },
         styles: TextStyleConfig { text_bold: true },
-        options: HashMap::new(),
+        options: {
+            let mut opts = HashMap::new();
+            opts.insert("auto_reset_enabled".to_string(), serde_json::Value::Bool(false));
+            opts
+        },
     }
 }

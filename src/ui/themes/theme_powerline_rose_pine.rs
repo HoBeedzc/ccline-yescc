@@ -273,6 +273,10 @@ pub fn quota_segment() -> SegmentConfig {
             }),
         },
         styles: TextStyleConfig::default(),
-        options: HashMap::new(),
+        options: {
+            let mut opts = HashMap::new();
+            opts.insert("auto_reset_enabled".to_string(), serde_json::Value::Bool(false));
+            opts
+        },
     }
 }

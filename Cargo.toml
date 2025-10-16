@@ -1,6 +1,6 @@
 [package]
 name = "ccometixline-88cc"
-version = "1.0.10"
+version = "1.0.11"
 edition = "2021"
 description = "CCometixLine (ccline) - High-performance Claude Code StatusLine tool written in Rust (88Code version)"
 authors = ["Hobee Liu"]
@@ -36,4 +36,4 @@ path = "src/main.rs"
 default = ["tui", "self-update", "dirs", "quota"]
 tui = ["ratatui", "crossterm", "ansi_term", "ansi-to-tui", "chrono"]
 self-update = ["ureq", "semver", "chrono", "dirs"]
-quota = ["ureq", "dirs"]
+quota = ["ureq", "dirs", "chrono"]

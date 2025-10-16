@@ -247,16 +247,105 @@ impl QuotaSegment {
         }
     }
 
-    fn format_reset_info(&self, reset_times: u32, auto_reset: bool) -> String {
-        if reset_times > 0 {
-            if auto_reset {
-                format!("↻ {} AutoReset", reset_times)
-            } else {
-                format!("↻ {}", reset_times)
-            }
+    fn format_reset_info(&self, reset_times: u32, auto_reset_when_zero: bool, user_auto_reset_enabled: bool) -> String {
+        let status = if user_auto_reset_enabled {
+            // 用户在TUI中启用了Auto Reset
+            "[reset on auto]"
+        } else if auto_reset_when_zero {
+            // API返回的auto_reset_when_zero为true
+            "[reset on zero]"
         } else {
-            String::new()
+            "[reset off]"
+        };
+        format!("↻ {} {}", reset_times, status)
+    }
+
+    /// 检查当前是否在重置时间窗口内
+    /// - 18:55-18:59：必须剩余2次或更多重置机会才进行重置
+    /// - 23:55-23:59：只要有重置次数（>=1）就进行重置
+    fn is_in_reset_window(&self, reset_times: u32) -> bool {
+        use chrono::{Local, Timelike};
+        
+        let now = Local::now();
+        let hour = now.hour();
+        let minute = now.minute();
+        
+        // 18:55 - 18:59：需要2次或更多重置机会
+        if hour == 18 && minute >= 55 && minute <= 59 {
+            return reset_times >= 2;
         }
+        
+        // 23:55 - 23:59：只要有重置次数就可以
+        if hour == 23 && minute >= 55 && minute <= 59 {
+            return reset_times >= 1;
+        }
+        
+        false
+    }
+
+    /// 执行重置操作（调用API）
+    /// 返回重置是否成功
+    fn perform_reset(&self, api_key: &str, subscription_id: u32) -> bool {
+        let url = format!("https://www.88code.org/api/reset-credits/{}", subscription_id);
+        let bearer_token = format!("Bearer {}", api_key);
+        let debug = env::var("C88_DEBUG").is_ok();
+
+        if debug {
+            eprintln!("[DEBUG] Attempting to reset credits for subscription {}", subscription_id);
+        }
+
+        let result = ureq::post(&url)
+            .set("accept", "*/*")
+            .set("content-type", "application/json")
+            .set("Authorization", &bearer_token)
+            .timeout(Duration::from_secs(5))
+            .call();
+
+        match result {
+            Ok(response) => {
+                if response.status() == 200 {
+                    if debug {
+                        eprintln!("[DEBUG] Reset successful for subscription {}", subscription_id);
+                    }
+                    true
+                } else {
+                    if debug {
+                        eprintln!("[DEBUG] Reset failed with status {}", response.status());
+                    }
+                    false
+                }
+            }
+            Err(e) => {
+                if debug {
+                    eprintln!("[DEBUG] Reset error: {}", e);
+                }
+                false
+            }
+        }
+    }
+
+    /// 检查并执行自动重置（如果需要）
+    fn check_and_auto_reset(
+        &self,
+        api_key: &str,
+        subscription_id: u32,
+        reset_times: u32,
+        auto_reset_enabled: bool,
+    ) -> bool {
+        if !auto_reset_enabled {
+            return false;
+        }
+
+        if reset_times == 0 {
+            return false;
+        }
+
+        if !self.is_in_reset_window(reset_times) {
+            return false;
+        }
+
+        // 在重置窗口内，执行重置
+        self.perform_reset(api_key, subscription_id)
     }
 }
 
@@ -271,6 +360,19 @@ impl Segment for QuotaSegment {
         {
             let api_key = self.load_api_key()?;
 
+            // 加载配置获取auto_reset_enabled选项
+            let auto_reset_enabled = if let Ok(config) = crate::config::Config::load() {
+                config
+                    .segments
+                    .iter()
+                    .find(|s| s.id == SegmentId::Quota)
+                    .and_then(|sc| sc.options.get("auto_reset_enabled"))
+                    .and_then(|v| v.as_bool())
+                    .unwrap_or(false)
+            } else {
+                false
+            };
+
             // 使用静态方法进行端点检测
             if let Some((endpoint_url, response)) =
                 SmartEndpointDetector::detect_endpoint_static(&api_key)
@@ -282,7 +384,19 @@ impl Segment for QuotaSegment {
                 // 获取重置次数信息
                 let reset_info = if let Some(sub_id) = response.subscription_id {
                     if let Some(sub_info) = self.fetch_subscription_info(&api_key, sub_id) {
-                        self.format_reset_info(sub_info.reset_times, sub_info.auto_reset_when_zero)
+                        // 检查并执行自动重置（内部会进行所有必要的检查）
+                        let _ = self.check_and_auto_reset(
+                            &api_key,
+                            sub_id,
+                            sub_info.reset_times,
+                            auto_reset_enabled,
+                        );
+                        
+                        self.format_reset_info(
+                            sub_info.reset_times, 
+                            sub_info.auto_reset_when_zero,
+                            auto_reset_enabled
+                        )
                     } else {
                         String::new()
                     }
